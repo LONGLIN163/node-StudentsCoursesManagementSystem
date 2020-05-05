@@ -1,0 +1,18 @@
+{
+  "name": "project_electivecoursessystem",
+  "version": "1.0.0",
+  "description": "My first pure node.js project.The technology stack covers: Node.js + Express + Mongodb + Mongoose + Ejs + Bootstrap + Jquery...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "LongLin",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "formidable": "^1.2.2",
+    "mongoose": "^5.9.11"
+  }
+}
