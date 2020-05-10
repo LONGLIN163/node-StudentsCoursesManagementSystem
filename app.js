@@ -21,6 +21,8 @@ app.use(session({
 app.set("view engine","ejs");
 app.get('/admin',adminCtrl.showAdminDashboard);
 app.get('/admin/student',adminCtrl.showAdminStudent);
+app.get('/admin/course',adminCtrl.showAdminCourse);
+app.get('/admin/statement',adminCtrl.showAdminStatement);
 
 
 //Create middlewares

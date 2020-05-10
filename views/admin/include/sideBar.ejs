@@ -1,0 +1,41 @@
+<div id="sidebar-menu"
+class="main_menu_side hidden-print main_menu">
+<div class="menu_section active">
+    <ul class="nav side-menu">
+        <li class='<% if(page=='index'){ %>
+            active
+            <% } %>'>
+            <a href="/admin">
+                <i class="fa fa-home"></i>
+                Elective Status
+            </a>
+        </li>
+        <li class='<% if(page=='student'){ %>
+            active
+            <% } %>'>
+            <a href="/admin/student"><i
+                    class="fa fa-table"></i>
+                Students Management
+            </a>
+        </li>
+        <li  class='<% if(page=='course'){ %>
+            active
+            <% } %>'>
+            <a href="/admin/course"><i
+                    class="fa fa-clone"></i>
+                Courses Management
+            </a></li>
+        <li  class='<% if(page=='statement'){ %>
+            active
+            <% } %>'>
+            <a href="/admin/statement"><i
+                    class="fa fa-bar-chart-o"></i>
+                Statement
+            </a></li>
+
+    </ul>
+    </li>
+
+    </ul>
+</div>
+</div>

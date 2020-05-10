@@ -21,7 +21,7 @@
 </head>
 
 <body class="footer_fixed nav-md">
-    <%- include('header') %> 
+    <%- include('include/header') %> 
 
     <div class="container body">
         <div class="main_container">
@@ -41,37 +41,8 @@
                     </div>
 
                     <br>
+                    <%- include('include/sideBar') %> 
 
-                    <div id="sidebar-menu"
-                        class="main_menu_side hidden-print main_menu">
-                        <div class="menu_section active">
-                            <ul class="nav side-menu">
-                                <li class="active">
-                                    <a>
-                                        <i class="fa fa-home"></i>
-                                        Elective Status
-                                    </a>
-                                </li>
-                                <li class=""><a><i
-                                            class="fa fa-edit"></i>
-                                        Students Management
-                                    </a>
-                                </li>
-                                <li class=""><a><i
-                                            class="fa fa-desktop"></i>
-                                        Courses Management
-                                    </a></li>
-                                <li class=""><a><i
-                                            class="fa fa-desktop"></i>
-                                        Statement
-                                    </a></li>
-
-                            </ul>
-                            </li>
-
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -81,179 +52,9 @@
                         <a id="menu_toggle"><i
                                 class="fa fa-bars"></i></a>
                     </div>
-                    <nav class="nav navbar-nav">
-                        <ul class=" navbar-right">
-                            <li class="nav-item dropdown open"
-                                style="padding-left: 15px;">
-                                <a href="javascript:;"
-                                    class="user-profile dropdown-toggle"
-                                    aria-haspopup="true"
-                                    id="navbarDropdown"
-                                    data-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <img src="./5555_files/img.webp"
-                                        alt="">John Doe
-                                </a>
-                                <div class="dropdown-menu dropdown-usermenu pull-right"
-                                    aria-labelledby="navbarDropdown"
-                                    x-placement="bottom-start"
-                                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(15px, 22px, 0px);">
-                                    <a class="dropdown-item"
-                                        href="javascript:;">
-                                        Profile</a>
-                                    <a class="dropdown-item"
-                                        href="javascript:;">
-                                        <span
-                                            class="badge bg-red pull-right">50%</span>
-                                        <span>Settings</span>
-                                    </a>
-                                    <a class="dropdown-item"
-                                        href="javascript:;">Help</a>
-                                    <a class="dropdown-item"
-                                        href="https://colorlib.com/polygon/gentelella/login.html"><i
-                                            class="fa fa-sign-out pull-right"></i>
-                                        Log Out</a>
-                                </div>
-                            </li>
-                            <li role="presentation"
-                                class="nav-item dropdown open">
 
-                                <ul class="dropdown-menu list-unstyled msg_list"
-                                    role="menu"
-                                    aria-labelledby="navbarDropdown1">
-                                    <li class="nav-item">
-                                        <a
-                                            class="dropdown-item">
-                                            <span
-                                                class="image"><img
-                                                    src="./5555_files/img.webp"
-                                                    alt="Profile Image"></span>
-                                            <span>
-                                                <span>John
-                                                    Smith</span>
-                                                <span
-                                                    class="time">3
-                                                    mins
-                                                    ago</span>
-                                            </span>
-                                            <span
-                                                class="message">
-                                                Film
-                                                festivals
-                                                used to be
-                                                do-or-die
-                                                moments for
-                                                movie
-                                                makers. They
-                                                were
-                                                where...
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a
-                                            class="dropdown-item">
-                                            <span
-                                                class="image"><img
-                                                    src="./5555_files/img.webp"
-                                                    alt="Profile Image"></span>
-                                            <span>
-                                                <span>John
-                                                    Smith</span>
-                                                <span
-                                                    class="time">3
-                                                    mins
-                                                    ago</span>
-                                            </span>
-                                            <span
-                                                class="message">
-                                                Film
-                                                festivals
-                                                used to be
-                                                do-or-die
-                                                moments for
-                                                movie
-                                                makers. They
-                                                were
-                                                where...
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a
-                                            class="dropdown-item">
-                                            <span
-                                                class="image"><img
-                                                    src="./5555_files/img.webp"
-                                                    alt="Profile Image"></span>
-                                            <span>
-                                                <span>John
-                                                    Smith</span>
-                                                <span
-                                                    class="time">3
-                                                    mins
-                                                    ago</span>
-                                            </span>
-                                            <span
-                                                class="message">
-                                                Film
-                                                festivals
-                                                used to be
-                                                do-or-die
-                                                moments for
-                                                movie
-                                                makers. They
-                                                were
-                                                where...
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a
-                                            class="dropdown-item">
-                                            <span
-                                                class="image"><img
-                                                    src="./5555_files/img.webp"
-                                                    alt="Profile Image"></span>
-                                            <span>
-                                                <span>John
-                                                    Smith</span>
-                                                <span
-                                                    class="time">3
-                                                    mins
-                                                    ago</span>
-                                            </span>
-                                            <span
-                                                class="message">
-                                                Film
-                                                festivals
-                                                used to be
-                                                do-or-die
-                                                moments for
-                                                movie
-                                                makers. They
-                                                were
-                                                where...
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div
-                                            class="text-center">
-                                            <a
-                                                class="dropdown-item">
-                                                <strong>See
-                                                    All
-                                                    Alerts</strong>
-                                                <i
-                                                    class="fa fa-angle-right"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
+                    <%- include('include/topBar') %> 
+
                 </div>
             </div>
 
