@@ -1,3 +1,6 @@
+var formidable = require('formidable');
+
+
 exports.showAdminDashboard=function(req,res){
     res.render("admin/index.ejs",{
         page:"index"
@@ -20,7 +23,20 @@ exports.showAdminStudentImport=function(req,res){
         page:"studentimport"
     });
 }
+// Excute excel uploading
+exports.doAdminStudentImport=function(req,res){
 
+    var form = new formidable.IncomingForm();
+    form.uploadDir = "./uploads";
+    form.keepExtensions = true;
+    form.parse(req, function(err, fields, files) {
+    //   res.writeHead(200, {'content-type': 'text/plain'});
+    //   res.write('received upload:\n\n');
+    //   res.end(util.inspect({fields: fields, files: files}));
+    });
+
+    console.log("ok");
+}
 //-------------------------------- 
 exports.showAdminCourse=function(req,res){
     res.render("admin/course.ejs",{
