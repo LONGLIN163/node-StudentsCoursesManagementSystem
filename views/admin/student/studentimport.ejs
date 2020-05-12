@@ -88,7 +88,7 @@
                     <div class="page-title">
                         <h5>Please import excel table:
                         </h5>
-                        <form action="/admin/student/import" enctype="multipart/form-data" method="post">
+                        <form id="fileform" action="/admin/student/import" enctype="multipart/form-data" method="post">
                             <p>
                                 <input type="file" name="studentExcel">
                             </p>
@@ -118,4 +118,17 @@
         src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js"
         data-cf-settings="da9211853b84e77b976e48a3-|49"
         defer=""></script>
+    
+    <script>
+        $("#fileform").on("submit",function(){
+            //confirm("Warning! Upload excel file will thoroughly reset the database,U sure to it?")
+            if(!confirm("Warning! Upload excel file will thoroughly reset the database,U sure to it?")){
+                return false;// This will stop submit event!!!
+            }
+        })
+            if(!confirm("Are you serious???")){
+                return false;// This will stop submit event!!!
+            }
+        })
+    </script>
 </body>
