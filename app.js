@@ -29,16 +29,11 @@ app.get('/admin/course',adminCtrl.showAdminCourse);
 app.get('/admin/statement',adminCtrl.showAdminStatement);
 
 
-//Create middlewares
-// app.get('/', function(req, res){
-//     res.send('Hello World');
-// });
-
 //Set static file
 app.use(express.static("public"));
 //Set 404 info page
 app.use(function(req,res){
-    res.send("404AAAAAAAAAAAAAA! The page doesn't exist!!!");
+    res.send("404A! The page doesn't exist!!!");
 })
 
 
