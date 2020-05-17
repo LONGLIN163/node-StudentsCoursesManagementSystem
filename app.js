@@ -21,7 +21,6 @@ app.use(session({
 app.set("view engine","ejs");
 app.get('/admin',adminCtrl.showAdminDashboard);
 app.get('/admin/student',adminCtrl.showAdminStudent);
-app.get('/admin/student/export',adminCtrl.showAdminStudentExport);
 app.get('/admin/student/import',adminCtrl.showAdminStudentImport);
 app.post('/admin/student/import',adminCtrl.doAdminStudentImport);
 
