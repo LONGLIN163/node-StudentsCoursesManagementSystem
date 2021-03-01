@@ -1,41 +1,29 @@
-<div id="sidebar-menu"
-class="main_menu_side hidden-print main_menu">
-<div class="menu_section active">
-    <ul class="nav side-menu">
-        <li class='<% if(page=='index'){ %>
-            active
-            <% } %>'>
-            <a href="/admin">
-                <i class="fa fa-home"></i>
-                Elective Status
-            </a>
-        </li>
-        <li class='<% if(page=='student'){ %>
-            active
-            <% } %>'>
-            <a href="/admin/student"><i
-                    class="fa fa-table"></i>
-                Students Management
-            </a>
-        </li>
-        <li  class='<% if(page=='course'){ %>
-            active
-            <% } %>'>
-            <a href="/admin/course"><i
-                    class="fa fa-clone"></i>
-                Courses Management
-            </a></li>
-        <li  class='<% if(page=='statement'){ %>
-            active
-            <% } %>'>
-            <a href="/admin/statement"><i
-                    class="fa fa-bar-chart-o"></i>
-                Statement
-            </a></li>
-
+<section id='sidebar'>
+    <ul id='dock'>
+      <li class='<% if(page=='index'){ %>
+        active
+        <% } %>'>
+        <i class='icon-sitemap'></i>
+        <a href="/admin">Admin</a>
+      </li>
+      <li class='<% if(page=='student'){ %>
+        active
+        <% } %>'>
+        <i class='icon-group'></i>
+        <a href="/admin/student">Student</a>
+      </li>
+      <li class='<% if(page=='course'){ %>
+        active
+        <% } %>'>
+        <i class='icon-table'></i>
+        <a href="/admin/course">Course</a>
+      </li>
+      <li class='<% if(page=='report'){ %>
+        active
+        <% } %>'>
+        <i class='icon-renren'></i>
+        <a href="/admin/report">Report</a>
+      </li>
     </ul>
-    </li>
-
-    </ul>
-</div>
-</div>
+    <div data-toggle='tooltip' id='beaker' title='Made by lab2023'></div>
+  </section>

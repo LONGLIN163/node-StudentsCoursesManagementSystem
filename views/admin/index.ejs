@@ -12,55 +12,11 @@
   </head>
   <body class='main page'>
     <!-- Navbar -->
-    <div class='navbar navbar-default' id='navbar'>
-      <a class='navbar-brand' href='#'>
-        <i class='icon-coffee'></i>
-        Node-StudentsCoursesManagementSystem admin
-      </a>
-      <ul class='nav navbar-nav pull-right'>
-        <li>
-          <a href='#'>
-            <i class='icon-cog'></i>
-            Settings
-          </a>
-        </li>
-        <li class='dropdown user'>
-          <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
-            <i class='icon-user'></i>
-            <strong>John DOE</strong>
-            <b class='caret'></b>
-          </a>
-          <ul class='dropdown-menu'>
-            <li>
-              <a href="/">Sign out</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+    <%- include('include/header') %> 
+
     <div id='wrapper'>
       <!-- Sidebar -->
-      <section id='sidebar'>
-        <ul id='dock'>
-          <li class='active launcher'>
-            <i class='icon-sitemap'></i>
-            <a href="dashboard.html">Course Status</a>
-          </li>
-          <li class='launcher'>
-            <i class='icon-group'></i>
-            <a href="forms.html">Students</a>
-          </li>
-          <li class='launcher'>
-            <i class='icon-table'></i>
-            <a href="tables.html">Management</a>
-          </li>
-          <li class='launcher'>
-            <i class='icon-renren'></i>
-            <a href='#'>Table</a>
-          </li>
-        </ul>
-        <div data-toggle='tooltip' id='beaker' title='Made by lab2023'></div>
-      </section>
+      <%- include('include/sideBar') %>
       <!-- Tools -->
       <section id='tools'>
         <ul class='breadcrumb' id='breadcrumb'>

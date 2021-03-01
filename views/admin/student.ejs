@@ -1,80 +1,43 @@
+
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta http-equiv="Content-Type"
-        content="text/html; charset=UTF-8">
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-    <title>ElectiveCoursesSystem-Student</title>
+<html class='no-js' lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Node-StudentsCoursesManagementSystem</title>
     <link href="/css/application-a07755f5.css" rel="stylesheet" type="text/css" />
     <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="/css/iconfont.css" rel="stylesheet" type="text/css"></head>
-</head>
+    
+  </head>
+  <body class='main page'>
+    <!-- Navbar -->
+    <%- include('include/header') %> 
+    <div id='wrapper'>
+      <!-- Sidebar -->
+      <%- include('include/sideBar') %>
+      <!-- Tools -->
+      <section id='tools'>
+        <ul class='breadcrumb' id='breadcrumb'>
+          <li class='title'>Dashboard</li>
+          <li><a href="#">Lorem</a></li>
+          <li class='active'><a href="#">ipsum</a></li>
+        </ul>
+      </section>
+      <!-- Content -->
+      <div id='content'>
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            Hierapolis Rocks!
+          </div>
+          <div class="panel-body">
 
-<body class="footer_fixed nav-md">
-    <%- include('include/header') %>
-    <div class="container body">
-        <div class="main_container">
-            <div class="col-md-3 left_col">
-                <div class="left_col scroll-view">
-                    <div class="navbar nav_title"
-                        style="border: 0;">
-                        <a href="#" class="site_title"><i
-                                class="fa fa-paw"></i>
-                            <span>University</span></a>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="profile clearfix"></div>
-                    <br>
-                    <%- include('include/sideBar') %>
-                </div>
-            </div>
-
-            <div class="top_nav">
-                <div class="nav_menu">
-                    <div class="nav toggle">
-                        <a id="menu_toggle"><i
-                                class="fa fa-bars"></i></a>
-                    </div>
-
-                    <%- include('include/topBar') %>
-                    <!-- Tools -->
-                    <section id='tools'>
-                        <ul class='breadcrumb'
-                            id='breadcrumb'>
-                            <li
-                                class='breadcrumb-item active'>
-                                <a href="#">Student</a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a
-                                    href="/admin/student/import">Import
-                                    Student</a>
-                            </li>
-                        </ul>
-                    </section>
-                </div>
-            </div>
-
-            <div class="right_col" role="main"
-                style="min-height: 917px;">
-                <div class="">
-                    <div class="page-title">
-                        <div class="title_left">
-                            <h3>Fixed Footer <small> Just
-                                    add class
-                                    <strong>footer_fixed</strong></small>
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+    <!-- Footer -->
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
-</body>
+  </body>
+</html>
