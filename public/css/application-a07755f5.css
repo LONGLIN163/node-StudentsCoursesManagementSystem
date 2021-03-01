@@ -11,3 +11,12 @@
 	position: relative;
 	top: -4px;
 }
+
+
+#navbar .navbar-brand {
+    font-size: 1.8em;
+    font-size: 38px;
+    font-family: sans-serif;
+    padding-left: 3px;
+    line-height: 20px;
+}
