@@ -12,16 +12,16 @@
   </head>
   <body class='main page'>
     <!-- Navbar -->
-    <%- include('include/header') %> 
+    <%- include('../include/header') %> 
     <div id='wrapper'>
       <!-- Sidebar -->
-      <%- include('include/sideBar') %>
+      <%- include('../include/sideBar') %>
       <!-- Tools -->
       <section id='tools'>
         <ul class='breadcrumb' id='breadcrumb'>
-          <li class='active'>Students</li>
+          <li><a href="/admin/student">Students</a></li>
           <li><a href="/admin/student/import">Import Students</a></li>
-          <li><a href="/admin/student/export">Generate Passwords</a></li>
+          <li class='active'>Generate Passwords</li>
         </ul>
       </section>
       <!-- Content -->
