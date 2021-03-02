@@ -8,6 +8,7 @@
     <link href="/css/application-a07755f5.css" rel="stylesheet" type="text/css" />
     <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="/css/iconfont.css" rel="stylesheet" type="text/css"></head>
+    <link href="/css/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css"></head>
     
   </head>
   <body class='main page'>
@@ -27,16 +28,74 @@
       <div id='content'>
         <div class='panel panel-default'>
           <div class='panel-heading'>
-            Hierapolis Rocks!
+            All Students
           </div>
           <div class="panel-body">
-
+            <!-- Use jqGrid to make a table -->
+            <table id="list"></table> 
+            <div id="listnav"></div>
           </div>
         </div>
       </div>
     </div>
     <!-- Footer -->
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/jquery.jqGrid.src.js"></script>
+    <script>
+       var lastsel;
+        $("#list").jqGrid( {
+              datatype : "local",
+              colNames : [ 'sid', 'name', 'grade'],
+              colModel : [ 
+                          {name : 'sid', index : 'sid',  width : 100 , editable : true}, 
+                          {name : 'name',index : 'name', width : 100 , editable : true}, 
+                          { name : 'grade', 
+                            index : 'grade',  
+                            width : 100 , 
+                            editable : true,
+                            editoptions : {value : "FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}
+                          }
+                        ],
+              rowNum : 20,
+              rowList : [ 10, 20, 30 ],
+              sortname : 'sid',
+              viewrecords : true,
+              sortorder : "desc",
+              autowidth: true,
+              onSelectRow : function(id) {
+                  if (id && id !== lastsel) {
+                    jQuery('#list').jqGrid('restoreRow', lastsel);
+                    jQuery('#list').jqGrid('editRow', id, true);
+                    lastsel = id;
+                  }
+                }
+            })
+
+            /*
+            var data=[
+                  { "sid":"John", "name":30, "age":15 },
+                  { "sid":"John", "name":30, "age":15 },
+                  { "sid":"John", "name":30, "age":15 },
+                  { "sid":"John", "name":30, "age":15 }
+            ]
+            for ( var i = 0; i <= data.length; i++){
+                  $("#list").jqGrid('addRowData', i + 1, data[i]);
+            }*/
+
+            //request data, then insert rows
+            $.get("/data.txt",function(data){
+                //console.log("data",data)
+                var data=JSON.parse(data).result;
+                //console.log("data2",data)
+                //var data=data.result;
+                for ( var i = 0; i <= data.length; i++){
+                  $("#list").jqGrid('addRowData', i + 1, data[i]);
+                }
+
+                //jQuery("#list").jqGrid('navGrid', '#listnav', {edit : false,add : false,del : false});
+            })
+
+    </script>
   </body>
 </html>
