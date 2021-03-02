@@ -23,8 +23,6 @@ app.get('/admin/student',adminCtrl.showAdminStudent);
 app.get('/admin/student/import',adminCtrl.showAdminStudentImport);
 app.post('/admin/student/import',adminCtrl.doAdminStudentImport);
 
-app.get('/admin/student/export',adminCtrl.showAdminStudentExport);
-
 app.get('/admin/course',adminCtrl.showAdminCourse);
 app.get('/admin/report',adminCtrl.showAdminReport);
 

@@ -20,24 +20,35 @@
       <section id='tools'>
         <ul class='breadcrumb' id='breadcrumb'>
           <li><a href="/admin/student">Students</a></li>
-          <li><a href="/admin/student/import">Import Students</a></li>
-          <li class='active'>Generate Passwords</li>
+          <li class='active'>Import Students</li>
         </ul>
       </section>
       <!-- Content -->
       <div id='content'>
         <div class='panel panel-default'>
           <div class='panel-heading'>
-            Hierapolis Rocks!
+            Import excel file
           </div>
           <div class="panel-body">
+            <p>import excel file here</p>
+            <!-- use iframe to embed html to the current webpage -->
+            <iframe src="/template/excelForm.html" frameborder="0">
+
+          </iframe>
 
           </div>
         </div>
       </div>
     </div>
     <!-- Footer -->
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script>
+      $("#fileform").on("submit",function(){
+        if(!confirm("Notice, Database will be reset if u upload a excel!")){
+          return false;//false will stop submit
+        }
+      })
+    </script>
   </body>
 </html>

@@ -16,15 +16,10 @@ exports.showAdminStudent=function(req,res){
     });
 }
 
-exports.showAdminStudentExport=function(req,res){
-    res.render("admin/student/studentexport.ejs",{
-        page:"studentexport"
-    });
-}
 
 exports.showAdminStudentImport=function(req,res){
-    res.render("admin/student/studentimport.ejs",{
-        page:"studentimport"
+    res.render("admin/student/import.ejs",{
+        page:"student"
     });
 }
 
@@ -79,7 +74,8 @@ exports.doAdminStudentImport=function(req,res){
     });
 
 }
-//-------------------------------- 
+
+
 exports.showAdminCourse=function(req,res){
     res.render("admin/course.ejs",{
         page:"course"
