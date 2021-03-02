@@ -6,7 +6,7 @@ var adminCtrl=require("./controllers/adminCtrl");
 //Create express app obj
 var app = express();
 //Connect to database
-mongoose.connect('mongodb://localhost/studnetCourseSystemDB', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/scdb', {useNewUrlParser: true});
 //Use session
 app.use(session({
     secret: 'studnetCourseSystemDB',

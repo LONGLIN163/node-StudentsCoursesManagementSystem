@@ -32,9 +32,9 @@
           </div>
           <div class="panel-body">
             <p>import excel file here</p>
-            <form action="/admin/student/import" enctype="multipart/form-data" method="post">
+            <form id="fileform" action="/admin/student/import" enctype="multipart/form-data" method="post">
               <p><input type="file" name="studentExcel"></p>
-              <p><input type="submit" class="btn" name="" value="upload"></p>
+              <p><input type="submit" class="btn btn-success" value="upload"></p>
           </form>
 
           </div>
@@ -42,7 +42,14 @@
       </div>
     </div>
     <!-- Footer -->
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script>
+      $("#fileform").on("submit",function(){
+        if(!confirm("Notice, Database will be reset if u upload a excel!")){
+          return false;//false will stop submit
+        }
+      })
+    </script>
   </body>
 </html>

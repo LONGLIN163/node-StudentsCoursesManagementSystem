@@ -16,17 +16,18 @@ exports.showAdminStudent=function(req,res){
     });
 }
 
-
 exports.showAdminStudentExport=function(req,res){
     res.render("admin/student/studentexport.ejs",{
         page:"studentexport"
     });
 }
+
 exports.showAdminStudentImport=function(req,res){
     res.render("admin/student/studentimport.ejs",{
         page:"studentimport"
     });
 }
+
 // Excute excel uploading
 exports.doAdminStudentImport=function(req,res){
 
@@ -35,8 +36,8 @@ exports.doAdminStudentImport=function(req,res){
     form.keepExtensions = true;
     form.parse(req, function(err, fields, files) {
         //console.log("------",files.studentExcel)
-        if(!files.studentExcel.name){
-            res.send("Please choose a file to upload!");
+        if(!files.studentExcel){
+            res.send("Please choose a correct excel file to upload!");
             return;
         }else if(path.extname(files.studentExcel.name)!=".xlsx"){// file type validation by extension
             //delete the illegal file
