@@ -1,6 +1,7 @@
 var formidable = require('formidable');
 var path = require("path");// use for get extensions
 var fs = require("fs");
+var url = require("url");
 var xlsx =require('node-xlsx');
 var Student = require("../models/Student");
 
@@ -16,11 +17,26 @@ exports.showAdminStudent=function(req,res){
     });
 }
 
+// receive request from a Get(using jqgrid)
+// data come back like this: student?_search=false&nd=1614792646180&rows=2&page=1&sidx=sid&sord=asc
+
 exports.getAllStudents=function(req,res){
+    /*
     Student.find({},function(err,results){
-        res.send({"results":results})
+        console.log(results)
+    })*/
+
+    var rows=url.parse(req.url,true).query.rows;
+    var page=url.parse(req.url,true).query.page;
+    console.log(rows,page);
+    
+    //Student.find({}).limit(rows).skip(rows*(page-1)).exec(function(err,results){
+    Student.find({}).limit(2).skip(2*page).exec(function(err,results){
+        console.log(results)
+        //res.json({"records":100,"rows":results})
     })
 }
+
 
 
 exports.showAdminStudentImport=function(req,res){

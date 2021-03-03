@@ -7,6 +7,8 @@ var adminCtrl=require("./controllers/adminCtrl");
 var app = express();
 //Connect to database
 mongoose.connect('mongodb://localhost/scdb', {useNewUrlParser: true});
+//mongoose.connect('mongodb://localhost/scdb', { useUnifiedTopology: true });
+//Use session
 //Use session
 app.use(session({
     secret: 'studnetCourseSystemDB',

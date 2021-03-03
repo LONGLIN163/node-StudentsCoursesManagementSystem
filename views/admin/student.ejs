@@ -49,113 +49,40 @@
     <script>
         var lastsel;
         // initialize table
-        function init(){
-          $("#list").jqGrid( {
-                datatype : "local",
-                colNames : [ 'sid', 'name', 'grade', 'initial password'],
-                colModel : [ 
-                            {name : 'sid', index : 'sid',  width : 100 ,key:true}, 
-                            {name : 'name',index : 'name', width : 100 , editable : true}, 
-                            { name : 'grade', 
-                              index : 'grade',  
-                              width : 100 , 
-                              editable : true,
-                              edittype:"select",
-                              editoptions : {value : "middle1:middle1; middle2:middle2; middle3:middle3; high1:high1; high2:high2; high3:high3 "}
-                            },
-                            {name : 'password', index : 'password',  width : 100 ,key:true}, 
-                          ],
-                rowNum : 2,
-                rowList : [ 2, 4, 6 ],//how many rows u want to see in each page
-                sortname : 'sid',
-                pager : '#listnav',
-                viewrecords: true,
-                autowidth: true,
-                height:400,
-                cellEdit: true,
-                cellsubmit:"clientArray",
-                afterSaveCell: function(rowid,cellname,val,iRow,iCol) {
-                    //alert(rowid);
-                    //console.log(rowid,name,val,iRow,iCol)
-                    var id =$("#list").getCell(iRow,0);
-                    console.log(id,cellname,val)
-                },
-                onPaging:function(pgButton){
-                  if(pgButton=="next_listnav"){
-                       pageNum++;
-                       getDataAndInitTable(pageNum);
-                       $("#list").trigger("reloadGrid");
-                  }
-                }
-                //multiselect : true,
-                /*
-                onSelectRow : function(id) {
-                  //console.log("id:",id)
-                    if (id && id !== lastsel) {
-                      jQuery('#list').jqGrid('restoreRow', lastsel);
-                      jQuery('#list').jqGrid('editRow', id, true);
-                      lastsel = id;
-                    }
-                  },
-                pager : 'listnav'*/
-          })
-        } 
-              /*
-              $("#list").jqGrid('navGrid', "#listnav", {
-                edit : false,
-                add : false,
-                del : false
-              });
-              $("#list").jqGrid('inlineNav', "#listnav");*/
-
-              /*
-              $("#delbtn").click(function() {
-                var gr = $("#list").jqGrid('getGridParam', 'selrow');
-                alert(gr)
-              });*/
-
-
-            /*
-            var data=[
-                  { "sid":"John", "name":30, "age":15 },
-                  { "sid":"John", "name":30, "age":15 },
-                  { "sid":"John", "name":30, "age":15 },
-                  { "sid":"John", "name":30, "age":15 }
-            ]
-            for ( var i = 0; i <= data.length; i++){
-                  $("#list").jqGrid('addRowData', i + 1, data[i]);
-            }*/
-
-            //request data, then insert rows
-            /*
-            getDataAndInitTable(1);
-            function getDataAndInitTable(pageNum){
-              console.log("pageNum:",pageNum)
-              $.get("/data"+pageNum+".txt",function(data){
-                  init();
-                  //console.log("data",data)
-                  //var data=JSON.parse(data).result;
-                  //console.log("data2",data)
-                  var data=JSON.parse(data);
-                  for ( var i = 0; i <= data.length; i++){
-                    $("#list").jqGrid('addRowData', i + 1, data[i]);
-                  }
-  
-                  //jQuery("#list").jqGrid('navGrid', '#listnav', {edit : false,add : false,del : false});
-              })
-            }*/
-
-            $.get("/student",function(data){
-                  init();
-                  //console.log("data",data)
-                  //var data=JSON.parse(data).result;
-                  //console.log("data2",data)
-                  var data=data.results;
-                  for ( var i = 0; i <= data.length; i++){
-                    $("#list").jqGrid('addRowData', i + 1, data[i]);
-                  }
-            })
-
+        $("#list").jqGrid( {
+              //datatype : "local",
+              datatype : "json",
+              url : "/student",
+              colNames : [ 'sid', 'name', 'grade', 'initial password'],
+              colModel : [ 
+                          {name : 'sid', index : 'sid',  width : 100 ,key:true}, 
+                          {name : 'name',index : 'name', width : 100 , editable : true}, 
+                          { name : 'grade', 
+                            index : 'grade',  
+                            width : 100 , 
+                            editable : true,
+                            edittype:"select",
+                            editoptions : {value : "middle1:middle1; middle2:middle2; middle3:middle3; high1:high1; high2:high2; high3:high3 "}
+                          },
+                          {name : 'password', index : 'password',  width : 100 ,key:true}, 
+                        ],
+              rowNum : 2,
+              rowList : [ 10, 20, 30 ],//how many rows u want to see in each page
+              sortname : 'sid',
+              pager : '#listnav',
+              viewrecords: true,
+              autowidth: true,
+              height:400,
+              cellEdit: true,
+              cellsubmit:"clientArray",
+              afterSaveCell: function(rowid,cellname,val,iRow,iCol) {
+                  //alert(rowid);
+                  //console.log(rowid,name,val,iRow,iCol)
+                  var id =$("#list").getCell(iRow,0);
+                  console.log(id,cellname,val)
+              }
+        })
+        
     </script>
   </body>
 </html>
