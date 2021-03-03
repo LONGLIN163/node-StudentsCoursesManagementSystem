@@ -34,6 +34,7 @@
             <!-- Use jqGrid to make a table -->
             <table id="list"></table> 
             <div id="listnav"></div>
+            <input type="button" value="delete" id="delbtn">
           </div>
         </div>
       </div>
@@ -42,8 +43,9 @@
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.js"></script>
     <script type="text/javascript" src="/js/jquery.jqGrid.src.js"></script>
+    <script type="text/javascript" src="/js/grid.locale-cn.js"></script>
     <script>
-       var lastsel;
+        var lastsel;
         $("#list").jqGrid( {
               datatype : "local",
               colNames : [ 'sid', 'name', 'grade'],
@@ -54,23 +56,40 @@
                             index : 'grade',  
                             width : 100 , 
                             editable : true,
-                            editoptions : {value : "FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}
+                            edittype:"select",
+                            editoptions : {value : "1:middle1; 2:middle2; 3:middle3; 4:high1; 5:high2; 6:high3 "}
                           }
                         ],
-              rowNum : 20,
+              rowNum : 2,
               rowList : [ 10, 20, 30 ],
               sortname : 'sid',
               viewrecords : true,
               sortorder : "desc",
               autowidth: true,
+              //multiselect : true,
               onSelectRow : function(id) {
+                //console.log("id:",id)
                   if (id && id !== lastsel) {
                     jQuery('#list').jqGrid('restoreRow', lastsel);
                     jQuery('#list').jqGrid('editRow', id, true);
                     lastsel = id;
                   }
-                }
+                },
+              pager : 'listnav'
             })
+            
+            $("#list").jqGrid('navGrid', "#listnav", {
+              edit : false,
+              add : false,
+              del : false
+            });
+
+            $("#list").jqGrid('inlineNav', "#listnav");
+
+            $("#delbtn").click(function() {
+              var gr = $("#list").jqGrid('getGridParam', 'selrow');
+              alert(gr)
+            });
 
             /*
             var data=[
