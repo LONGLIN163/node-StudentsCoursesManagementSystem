@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 var studentSchema = new mongoose.Schema({
     "sid": Number,
     "name":String,
-    "grade":Number,
+    "grade":String,
     "password":String,
     "changedPassword":{type:Boolean,default:false}
   });
@@ -12,6 +12,7 @@ var studentSchema = new mongoose.Schema({
 //Read data from excel files and save them to database.
 studentSchema.statics.importStudent=function(workSheetsFromFile) {
     var str = "ABDEFGHJKLMNPQRTUVWXYZabdefghijkmnpqrtuvwxyz23456789&$%#@!";
+    var gradeArr=["middle1","middle1","middle1","high1","high2","high3"];
     //delete old collection
     mongoose.connection.collections['students'].drop( function() {//delete data from the last database,then save new data into it
 
@@ -28,7 +29,7 @@ studentSchema.statics.importStudent=function(workSheetsFromFile) {
                 var s=new Student({
                     "sid" : workSheetsFromFile[i].data[j][0],
                     "name" : workSheetsFromFile[i].data[j][1],
-                    "grade" : i+1,
+                    "grade" : gradeArr[i],
                     //*****initialize passwords with 8 digits num first*****
                     //"password":parseInt(Math.random()*99999999)
                     "password":password,

@@ -26,6 +26,8 @@ app.post('/admin/student/import',adminCtrl.doAdminStudentImport);
 app.get('/admin/course',adminCtrl.showAdminCourse);
 app.get('/admin/report',adminCtrl.showAdminReport);
 
+app.get('/student',adminCtrl.getAllStudents); //get all students
+
 
 //Set static file
 app.use(express.static("public"));

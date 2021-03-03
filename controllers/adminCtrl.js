@@ -16,6 +16,12 @@ exports.showAdminStudent=function(req,res){
     });
 }
 
+exports.getAllStudents=function(req,res){
+    Student.find({},function(err,results){
+        res.send({"results":results})
+    })
+}
+
 
 exports.showAdminStudentImport=function(req,res){
     res.render("admin/student/import.ejs",{
