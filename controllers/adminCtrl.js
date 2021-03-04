@@ -26,14 +26,26 @@ exports.getAllStudents=function(req,res){
         console.log(results)
     })*/
 
-    var rows=url.parse(req.url,true).query.rows;
-    var page=url.parse(req.url,true).query.page;
-    console.log(rows,page);
-    
-    //Student.find({}).limit(rows).skip(rows*(page-1)).exec(function(err,results){
-    Student.find({}).limit(2).skip(2*page).exec(function(err,results){
-        console.log(results)
-        //res.json({"records":100,"rows":results})
+    var rows=parseInt(url.parse(req.url,true).query.rows);
+    var page=parseInt(url.parse(req.url,true).query.page);
+    console.log(typeof rows);
+
+    var sidx=url.parse(req.url,true).query.sidx;
+    var sord=url.parse(req.url,true).query.sord;
+    var sordNumber=sord=="asc"?1:-1;
+    var sortObj={};
+    sortObj[sidx]=sordNumber;
+    Student.count({},function(err,count){
+        var total=Math.ceil(count/rows);
+        Student.find({}).sort(sortObj).limit(rows).skip(rows*page).exec(function(err,results){
+            //console.log(results)
+            res.json({
+                "record":count,
+                "total":total,
+                "page":page,
+                "rows":results
+            })
+        })
     })
 }
 
