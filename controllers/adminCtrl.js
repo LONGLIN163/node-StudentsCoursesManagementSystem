@@ -25,7 +25,6 @@ exports.getAllStudents=function(req,res){
     Student.find({},function(err,results){
         console.log(results)
     })*/
-
     var rows=parseInt(url.parse(req.url,true).query.rows);
     var page=parseInt(url.parse(req.url,true).query.page);
     console.log(typeof rows);
@@ -46,6 +45,36 @@ exports.getAllStudents=function(req,res){
                 "rows":results
             })
         })
+    })
+}
+
+exports.updateStudent=function(req,res){
+    var sid=parseInt(req.params.sid);
+    console.log("sid",typeof sid);
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+          var key=fields.cellname;
+          var value=fields.value;
+          Student.find({"sid":sid},function(err,results){
+              if(err){
+                res.send({"result":-2});//database exception
+                return;
+              }
+              if(results.length==0){
+                res.send({"result":-1});//no such student
+                return;
+              }
+              var theStudent=results[0];
+              theStudent[key]=value;
+              theStudent.save(function(err){
+                if(err){
+                    res.send({"result":-2});//database exception
+                    return;
+                }
+                res.send({"result":1});//save success
+              });
+
+          })
     })
 }
 

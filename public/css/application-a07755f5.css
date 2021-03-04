@@ -13,6 +13,13 @@
 }
 
 
+.infotip{
+	position: fixed;
+	top: 200px;
+	left: 50%;
+}
+
+
 #navbar .navbar-brand {
     font-size: 1.8em;
     font-size: 38px;

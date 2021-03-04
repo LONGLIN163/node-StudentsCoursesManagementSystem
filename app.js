@@ -29,7 +29,7 @@ app.get('/admin/course',adminCtrl.showAdminCourse);
 app.get('/admin/report',adminCtrl.showAdminReport);
 
 app.get('/student',adminCtrl.getAllStudents); //get all students
-
+app.post('/student/:sid',adminCtrl.updateStudent); //modify some student
 
 //Set static file
 app.use(express.static("public"));
