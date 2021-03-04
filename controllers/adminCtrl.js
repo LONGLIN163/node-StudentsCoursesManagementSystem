@@ -34,9 +34,28 @@ exports.getAllStudents=function(req,res){
     var sordNumber=sord=="asc"?1:-1;
     var sortObj={};
     sortObj[sidx]=sordNumber;
+
+    var keyword=url.parse(req.url,true).query.keyword;
+
     Student.count({},function(err,count){
         var total=Math.ceil(count/rows);
-        Student.find({}).sort(sortObj).limit(rows).skip(rows*page).exec(function(err,results){
+        //Student.find({}).sort(sortObj).limit(rows).skip(rows*page).exec(function(err,results){
+        // *******************fuzzy query**********************
+        var findFilter={};
+        if(keyword===undefined || keyword==""){
+            var findFilter={};
+        }else{
+            var regexp=new RegExp(keyword,"g");
+            findFilter={
+                $or:[
+                    {"sid":regexp},
+                    {"name":regexp},
+                    {"grade":regexp}
+                ]
+            }
+        }
+        console.log("findFilter",findFilter);
+        Student.find(findFilter).sort(sortObj).limit(rows).skip(rows*(page-1)).exec(function(err,results){
             //console.log(results)
             res.json({
                 "record":count,
@@ -45,11 +64,14 @@ exports.getAllStudents=function(req,res){
                 "rows":results
             })
         })
+
+
+
     })
 }
 
 exports.updateStudent=function(req,res){
-    var sid=parseInt(req.params.sid);
+    var sid=req.params.sid;
     console.log("sid",typeof sid);
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
