@@ -19,7 +19,6 @@ exports.showAdminStudent=function(req,res){
 
 // receive request from a Get(using jqgrid)
 // data come back like this: student?_search=false&nd=1614792646180&rows=2&page=1&sidx=sid&sord=asc
-
 exports.getAllStudents=function(req,res){
     /*
     Student.find({},function(err,results){
@@ -32,29 +31,31 @@ exports.getAllStudents=function(req,res){
     var sidx=url.parse(req.url,true).query.sidx;
     var sord=url.parse(req.url,true).query.sord;
     var sordNumber=sord=="asc"?1:-1;
-    var sortObj={};
-    sortObj[sidx]=sordNumber;
 
     var keyword=url.parse(req.url,true).query.keyword;
 
-    Student.count({},function(err,count){
-        var total=Math.ceil(count/rows);
-        //Student.find({}).sort(sortObj).limit(rows).skip(rows*page).exec(function(err,results){
-        // *******************fuzzy query**********************
+    // *******************fuzzy query**********************
+    var findFilter={};
+    if(keyword===undefined || keyword==""){
         var findFilter={};
-        if(keyword===undefined || keyword==""){
-            var findFilter={};
-        }else{
-            var regexp=new RegExp(keyword,"g");
-            findFilter={
-                $or:[
-                    {"sid":regexp},
-                    {"name":regexp},
-                    {"grade":regexp}
-                ]
-            }
+    }else{
+        var regexp=new RegExp(keyword,"g");
+        findFilter={
+            $or:[
+                {"sid":regexp},
+                {"name":regexp},
+                {"grade":regexp}
+            ]
         }
-        console.log("findFilter",findFilter);
+    }
+    console.log("findFilter",findFilter);
+
+    Student.count(findFilter,function(err,count){
+        var total=Math.ceil(count/rows);
+        var sortObj={};
+        sortObj[sidx]=sordNumber;
+
+        //Student.find({}).sort(sortObj).limit(rows).skip(rows*page).exec(function(err,results){
         Student.find(findFilter).sort(sortObj).limit(rows).skip(rows*(page-1)).exec(function(err,results){
             //console.log(results)
             res.json({
@@ -111,7 +112,7 @@ exports.showAdminStudentImport=function(req,res){
 // Excute excel uploading
 exports.doAdminStudentImport=function(req,res){
 
-    var form = new formidable.IncomingForm();
+    var form = new formidable.IncomingForm(); 
     form.uploadDir = "./uploads";
     form.keepExtensions = true;
     form.parse(req, function(err, fields, files) {

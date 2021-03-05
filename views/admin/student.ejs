@@ -32,7 +32,13 @@
             All Students
           </div>
           <div class="panel-body">
-            <!-- Use jqGrid to make a table -->
+            <div class="row searchbox">
+              <div class="col-lg-4">
+                <input type="text" class="form-control" placeholder="search..." autofocus id="keywordtext">
+              </div>
+            </div>
+            
+            <!-- Use jqGrid to make a table --> 
             <table id="list"></table> 
             <div id="listnav"></div>
             <input type="button" value="delete" id="delbtn">
@@ -116,6 +122,19 @@
             $('#infotip').poshytip('show').poshytip('hideDelayed', 1000);
           //});
         }
+
+        //bind("input" realtime input captrue
+        $("#keywordtext").bind("input",function(){
+          //console.log($(this).val())
+          var keyword=$(this).val();
+          // send ajax request
+          $("#list").jqGrid('clearGridData');  
+          $("#list").jqGrid('setGridParam',{
+                    datatype:'json',
+                    postData:{'keyword':keyword}, //send data 
+                    }).trigger("reloadGrid");
+
+        });
     </script>
 
   </body>
