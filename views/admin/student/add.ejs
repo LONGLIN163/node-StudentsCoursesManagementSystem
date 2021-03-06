@@ -97,14 +97,30 @@
       $("#sidTxt").blur(function(){
         var _sid=$(this).val();//-sid is user input
         console.log("_sid",_sid);
-        if(/^[\d]{9}$/.test(_sid)){
-          invalid.sid=false;
-          $(this).successTip("Success, sid correct!!!");
-        }else{
+        // regexp validation first
+        if(!/^[\d]{9}$/.test(_sid)){
           invalid.sid=true;
-          $(this).dangerTip("Sid must be a nine-digit number!!!");
-          //this.alertTip()
+          $(this).dangerTip("Could not pass regexp,Sid must be a nine-digit number!!!");
+          return;
         }
+        //*****validate if the sid has been used.
+        $.ajax({
+          type:"propfind",
+          url:"/student/"+$("input[name=sid]").val(),
+          success:function(data){
+              //console.log("data",data)
+              if(data.result==0){
+                invalid.sid=false;
+                $(this).successTip("Congrat! this sid has not been used!!!");
+              }else if(data.result>0){
+                invalid.sid=true;
+                $(this).dangerTip("Sorry! this sid has been used, please use another one!!!");
+              }else{
+                invalid.sid=true;
+                $(this).dangerTip("Sorry! Server error!!!");
+              }
+          } 
+        })
       })
 
       // ----Validate name

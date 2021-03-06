@@ -165,6 +165,23 @@ exports.showAdminStudentAdd=function(req,res){
         page:"student"
     });
 }
+
+
+exports.checkStudentExist=function(req,res){
+    var sid=req.params.sid;
+    if(err){
+        res.json({"result":-1});//database exception 
+        return;
+    }
+    Student.count({"sid":sid},function(err,count){
+        if(err){
+            res.json({"result":-1});//database exception 
+            return;
+        }
+        res.json({"result":count});
+    })
+}
+
 exports.addStudent=function(req,res){
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
