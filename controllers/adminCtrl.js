@@ -66,8 +66,6 @@ exports.getAllStudents=function(req,res){
             })
         })
 
-
-
     })
 }
 
@@ -159,6 +157,38 @@ exports.doAdminStudentImport=function(req,res){
 
     });
 
+}
+
+
+exports.showAdminStudentAdd=function(req,res){
+    res.render("admin/student/add.ejs",{
+        page:"student"
+    });
+}
+exports.addStudent=function(req,res){
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        if(err){
+            res.json({"result":-1});//database exception
+            return;
+        }
+    //    var sid=fields.sid,
+    //    var name=fields.name,
+    //    var grade=fields.grade,
+    //    var password=fields.password
+        new Student({
+            "sid": fields.sid,
+            "name":fields.name,
+            "grade":fields.grade,
+            "password":fields.password,
+        }).save(function(err){
+            if(err){
+                res.json({"result":-1});//database exception
+                return;
+            }
+            res.json({"result":1});//save success
+        });
+    })
 }
 
 

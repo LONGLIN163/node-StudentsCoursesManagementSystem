@@ -29,3 +29,9 @@
     padding-left: 3px;
     line-height: 20px;
 }
+
+.myAlert{
+	padding: 0 10px;
+	line-height: 30px;
+	margin-top: 5px;
+}

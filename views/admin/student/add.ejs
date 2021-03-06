@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html class='no-js' lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Node-StudentsCoursesManagementSystem</title>
+    <link href="/css/application-a07755f5.css" rel="stylesheet" type="text/css" />
+    <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/iconfont.css" rel="stylesheet" type="text/css"></head>
+    
+  </head>
+  <body class='main page'>
+    <!-- Navbar -->
+    <%- include('../include/header') %> 
+    <div id='wrapper'>
+      <!-- Sidebar -->
+      <%- include('../include/sideBar') %>
+      <!-- Tools -->
+      <section id='tools'>
+        <ul class='breadcrumb' id='breadcrumb'>
+          <li><a href="/admin/student">Students</a></li>
+          <li><a href="/admin/student/import"></a>Import Students</a></li>
+          <li class='active'>Add Student</li>
+        </ul>
+      </section>
+      <!-- Content -->
+      <div id='content'>
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            Add Student
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-5">
+                  <p>sid:</p>
+                  <p>
+                    <input type="text" class="form-control" id="sidTxt" checkValid>
+                   
+                  </p>
+                  <p>name:</p>
+                  <p><input type="text" class="form-control" id="nameTxt" checkValid></p>
+                  <p>grade:</p>
+                  <p>
+                    <select name="" class="form-control" id="gradeSelect" checkValid>
+                      <option value="middle1">Please select your grade...</option>
+                      <option value="middle1">middle1</option>
+                      <option value="middle2">middle2</option>
+                      <option value="middle3">middle3</option>
+                      <option value="high1"  >high1</option>
+                      <option value="high2"  >high2</option>
+                      <option value="high3"  >high3</option>
+                    </select
+                 </p>
+                 <p>initial password:</p>
+                 <p><input type="text" class="form-control" id="passwordTxt" checkValid></p>
+                 <p><input type="button" value="add" class="btn btn-success" id="submitbtn" disabled></p>
+              </div>
+
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script>
+      //contain all invalid info into a obj
+      var invalid={
+          "sid":true,
+          "name":true,
+          "grade":true,
+          "password":true
+      };
+
+      // ----Validate sid
+      $("#sidTxt").blur(function(){
+        var _sid=$(this).val();//-sid is user input
+        console.log("_sid",_sid);
+        if(/^[\d]{9}$/.test(_sid)){
+          invalid.sid=false;
+          $(this).successTip("Success, sid correct!!!");
+        }else{
+          invalid.sid=true;
+          $(this).dangerTip("Sid must be a nine-digit number!!!");
+          //this.alertTip()
+        }
+      })
+
+      // ----Validate name
+      $("#nameTxt").blur(function(){
+        var _name=$(this).val();
+        if(/^([\u4e00-\u9fa5]{2,20}|[a-zA-Z.\s]{2,20})$/.test(_name)){
+          invalid.name=false;
+          $(this).successTip("Success, name correct!!!");
+        }else{
+          invalid.name=true;
+          $(this).dangerTip("Name only can be chinese and english(2-20 chars), and the notation only can be dot and space!!!");
+          //this.alertTip()
+        }
+      })
+
+      // liston all the field
+      $("[checkValid").focus(function(){
+        $(this).clearTip();
+      })
+
+      //***********jquery extension*************
+      $.fn.extend({
+        "successTip":function(tip){
+          //console.log(this);// ... n.fn.init [div#wrapper, context: div#wrapper], this is jquery obj
+          // **********after--- jquery add dom sibling *************
+          this.after($("<div class='alert alert-success myAlert' role='alert'>"+tip+"</div>"));         
+        },
+        "dangerTip":function(tip){
+          this.after($("<div class='alert alert-danger myAlert' role='alert'>"+tip+"</div>"));         
+        },
+        "clearTip":function(){
+          this.nextAll(".alert").remove();         
+        },
+      })
+      /*
+      $("div").each(function(){
+        $(this).alertTip();  
+      })*/
+
+
+      // *************get if all fields with checkVaid attr is true, enable submitbtn**************
+      $("[checkValid").change(function(){
+        //console.log("haha")
+        var allValid;
+        for(var k in invalid){
+            if(invalid[k]){
+                allValid=false;
+                break;
+            }
+        }
+        if(allValid){
+          $("#submitbtn").attr("disabled",false);
+        }else{
+          $("#submitbtn").attr("disabled",true);
+        }
+
+        console.log("invalid",invalid);
+      })
+
+
+
+
+
+      //*************************
+      $("#submitbtn").click(function(){
+        var sid=$("#sidTxt").val();
+        var name=$("#nameTxt").val();
+        var grade=$("#gradeSelect").val();
+        var password=$("#passwordTxt").val();
+
+        $.post("/student",{
+          sid:sid,
+          name:name,
+          grade:grade,
+          password:password
+        },function(data){
+          console.log("data",data.result)
+          var result=data.result;
+          if(result==1){
+            alert("add student success")
+            $("input").val("");//empty all inputs
+          }else{
+            alert("add student failed")
+          }
+        })
+      })
+
+    </script>
+  </body>
+</html>

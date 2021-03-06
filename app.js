@@ -22,8 +22,12 @@ app.set("view engine","ejs");
 //Middlewares,routers
 app.get('/admin',adminCtrl.showAdminDashboard);
 app.get('/admin/student',adminCtrl.showAdminStudent);
+
 app.get('/admin/student/import',adminCtrl.showAdminStudentImport);
 app.post('/admin/student/import',adminCtrl.doAdminStudentImport);
+
+app.get('/admin/student/add',adminCtrl.showAdminStudentAdd);
+app.post('/student',adminCtrl.addStudent); //add student
 
 app.get('/admin/course',adminCtrl.showAdminCourse);
 app.get('/admin/report',adminCtrl.showAdminReport);
