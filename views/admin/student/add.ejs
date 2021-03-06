@@ -74,38 +74,6 @@
           "password":true
       };
 
-      // ----Validate sid
-      $("#sidTxt").blur(function(){
-        var _sid=$(this).val();//-sid is user input
-        console.log("_sid",_sid);
-        if(/^[\d]{9}$/.test(_sid)){
-          invalid.sid=false;
-          $(this).successTip("Success, sid correct!!!");
-        }else{
-          invalid.sid=true;
-          $(this).dangerTip("Sid must be a nine-digit number!!!");
-          //this.alertTip()
-        }
-      })
-
-      // ----Validate name
-      $("#nameTxt").blur(function(){
-        var _name=$(this).val();
-        if(/^([\u4e00-\u9fa5]{2,20}|[a-zA-Z.\s]{2,20})$/.test(_name)){
-          invalid.name=false;
-          $(this).successTip("Success, name correct!!!");
-        }else{
-          invalid.name=true;
-          $(this).dangerTip("Name only can be chinese and english(2-20 chars), and the notation only can be dot and space!!!");
-          //this.alertTip()
-        }
-      })
-
-      // liston all the field
-      $("[checkValid").focus(function(){
-        $(this).clearTip();
-      })
-
       //***********jquery extension*************
       $.fn.extend({
         "successTip":function(tip){
@@ -125,11 +93,88 @@
         $(this).alertTip();  
       })*/
 
+      // ----Validate sid
+      $("#sidTxt").blur(function(){
+        var _sid=$(this).val();//-sid is user input
+        console.log("_sid",_sid);
+        if(/^[\d]{9}$/.test(_sid)){
+          invalid.sid=false;
+          $(this).successTip("Success, sid correct!!!");
+        }else{
+          invalid.sid=true;
+          $(this).dangerTip("Sid must be a nine-digit number!!!");
+          //this.alertTip()
+        }
+      })
+
+      // ----Validate name
+      $("#nameTxt").blur(function(){
+        var _name=$(this).val();
+        console.log("_name",_name);
+
+        if(/^([\u4e00-\u9fa5]{2,20}|[a-zA-Z.\s]{2,20})$/.test(_name)){
+          invalid.name=false;
+          $(this).successTip("Success, name correct!!!");
+        }else{
+          invalid.name=true;
+          $(this).dangerTip("Name only can be chinese and english(2-20 chars), and the notation only can be dot and space!!!");
+          //this.alertTip()
+        }
+        console.log("_name",invalid.name);
+      })
+
+      // ----Validate grade
+      $("#gradeSelect").change(function(){
+        var _gradeSelect=$(this).val();
+        console.log("_gradeSelect",_gradeSelect);
+
+        if(_gradeSelect){
+          invalid.grade=false;
+          $(this).successTip("Success, grade selected!!!");
+        }else{
+          invalid.grade=true;
+          $(this).dangerTip("Please select your grade!");
+          //this.alertTip()
+        }
+        console.log("_name",invalid.name);
+      })
+
+      // ----Validate password
+      $("#passwordTxt").blur(function(){
+        var _password=$(this).val();
+        console.log("_password",_password);
+
+        if(checkStrength(_password) >= 3){
+          invalid.password=false;
+          $(this).successTip("Success, you have a good password now!");
+        }else{
+          invalid.password=true;
+          $(this).dangerTip("The password need contain capital,minuscule and notations, at least 6 charactors!");
+          //this.alertTip()
+        }
+        console.log("_name",invalid.name);
+      })
+      function checkStrength(password){
+        var lv = 0;
+        if(password.match(/[a-z]/g)){lv++;}
+        if(password.match(/[0-9]/g)){lv++;}
+        if(password.match(/(.[^a-z0-9])/g)){lv++;}
+        if(password.length < 6){lv=0;}
+        if(lv > 3){lv=3;}
+
+        return lv;
+    }
+
+      // liston all the field
+      $("[checkValid]").bind("focus change",function(){// bind two events
+        $(this).clearTip();
+      })
 
       // *************get if all fields with checkVaid attr is true, enable submitbtn**************
-      $("[checkValid").change(function(){
+      $("[checkValid]").blur(function(){
         //console.log("haha")
-        var allValid;
+        var allValid=true;
+        console.log("allValid",allValid)
         for(var k in invalid){
             if(invalid[k]){
                 allValid=false;
@@ -143,35 +188,42 @@
         }
 
         console.log("invalid",invalid);
+    })
+
+    
+
+    //*************************
+    $("#submitbtn").click(function(){
+      var sid=$("#sidTxt").val();
+      var name=$("#nameTxt").val();
+      var grade=$("#gradeSelect").val();
+      var password=$("#passwordTxt").val();
+
+      $.post("/student",{
+        sid:sid,
+        name:name,
+        grade:grade,
+        password:password
+      },function(data){
+        console.log("data",data.result)
+        var result=data.result;
+        if(result==1){
+          alert("add student success")
+           //after post success, reset add page and...
+          $("input").val("");//empty all inputs
+          //and set all 
+          var invalid={
+            "sid":true,
+            "name":true,
+            "grade":true,
+            "password":true
+          };
+
+        }else{
+          alert("add student failed")
+        }
       })
-
-
-
-
-
-      //*************************
-      $("#submitbtn").click(function(){
-        var sid=$("#sidTxt").val();
-        var name=$("#nameTxt").val();
-        var grade=$("#gradeSelect").val();
-        var password=$("#passwordTxt").val();
-
-        $.post("/student",{
-          sid:sid,
-          name:name,
-          grade:grade,
-          password:password
-        },function(data){
-          console.log("data",data.result)
-          var result=data.result;
-          if(result==1){
-            alert("add student success")
-            $("input").val("");//empty all inputs
-          }else{
-            alert("add student failed")
-          }
-        })
-      })
+    })
 
     </script>
   </body>
