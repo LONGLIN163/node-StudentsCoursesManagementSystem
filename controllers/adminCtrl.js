@@ -166,18 +166,10 @@ exports.showAdminStudentAdd=function(req,res){
     });
 }
 
-<<<<<<< HEAD
-
-exports.checkStudentExist=function(req,res){
-    var sid=req.params.sid;
-    if(err){
-        res.json({"result":-1});//database exception 
-=======
 exports.checkStudentExist=function(req,res){
     var sid=req.params.sid;
     if(!sid){
         res.json({"result" : -1});//database exception 
->>>>>>> devTest
         return;
     }
     Student.count({"sid":sid},function(err,count){
