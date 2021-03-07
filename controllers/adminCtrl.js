@@ -26,7 +26,7 @@ exports.getAllStudents=function(req,res){
     })*/
     var rows=parseInt(url.parse(req.url,true).query.rows);
     var page=parseInt(url.parse(req.url,true).query.page);
-    console.log(typeof rows);
+    //console.log(typeof rows);
 
     var sidx=url.parse(req.url,true).query.sidx;
     var sord=url.parse(req.url,true).query.sord;
@@ -48,7 +48,7 @@ exports.getAllStudents=function(req,res){
             ]
         }
     }
-    console.log("findFilter",findFilter);
+    //console.log("findFilter",findFilter);
 
     Student.count(findFilter,function(err,count){
         var total=Math.ceil(count/rows);
@@ -133,15 +133,15 @@ exports.doAdminStudentImport=function(req,res){
         var workSheetsFromFile = xlsx.parse("./"+files.studentExcel.path);
         //Check if the array match 
         //console.log("workSheetsFromFile:",workSheetsFromFile)
-        console.log("workSheetsFromFileLen:",workSheetsFromFile.length)
+        //console.log("workSheetsFromFileLen:",workSheetsFromFile.length)
 
         if(workSheetsFromFile.length!=6){
             res.send("U r missing sub tables!!!");
             return;
         }
         for(var i=0;i<6;i++){
-            console.log("0---"+workSheetsFromFile[i].data[0][0]);
-            console.log("1---"+workSheetsFromFile[i].data[0][1]);
+            //console.log("0---"+workSheetsFromFile[i].data[0][0]);
+            //console.log("1---"+workSheetsFromFile[i].data[0][1]);
             if(
                 workSheetsFromFile[i].data[0][0]!="sid"||
                 workSheetsFromFile[i].data[0][1]!="name"
@@ -166,11 +166,18 @@ exports.showAdminStudentAdd=function(req,res){
     });
 }
 
+<<<<<<< HEAD
 
 exports.checkStudentExist=function(req,res){
     var sid=req.params.sid;
     if(err){
         res.json({"result":-1});//database exception 
+=======
+exports.checkStudentExist=function(req,res){
+    var sid=req.params.sid;
+    if(!sid){
+        res.json({"result" : -1});//database exception 
+>>>>>>> devTest
         return;
     }
     Student.count({"sid":sid},function(err,count){
@@ -186,13 +193,59 @@ exports.addStudent=function(req,res){
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
         if(err){
-            res.json({"result":-1});//database exception
+            res.json({"result":-1});//-1---database exception. 
             return;
         }
-    //    var sid=fields.sid,
-    //    var name=fields.name,
-    //    var grade=fields.grade,
-    //    var password=fields.password
+
+        // ***********back-end validation*************
+        // 1----Validate name
+        var name=fields.name;
+        if(!/^([\u4e00-\u9fa5]{2,20}|[a-zA-Z.\s]{2,20})$/.test(name)){
+            res.json({"result":-4});//-4---the name doesnt match regexp. 
+            return;
+        }
+
+        // 2----Validate grade
+        var grade=fields.grade;
+        if(!grade){
+            res.json({"result":-5});//-5---the grade has not been select.
+            return;
+        }
+
+        // 3----Validate password
+        var password=fields.password;
+        if(checkStrength(password) < 3){
+            res.json({"result":-6});//-6---the password is not safe.
+            return;
+        }
+
+        function checkStrength(password){
+            var lv = 0;
+            if(password.match(/[a-z]/g)){lv++;}
+            if(password.match(/[0-9]/g)){lv++;}
+            if(password.match(/(.[^a-z0-9])/g)){lv++;}
+            if(password.length < 6){lv=0;}
+            if(lv > 3){lv=3;}
+            return lv;
+        }
+
+        // 4----Validate sid
+        var sid=fields.sid;
+        if(!/^[\d]{9}$/.test(sid)){
+            res.json({"result":-2});//-2---the password doesnt match regexp.
+            return;
+        }
+        Student.count({"sid":sid},function(err,count){//This is asyc function, put it back here.
+            if(err){
+                res.json({"result":-1});//-1---database exception. 
+                return;
+            }
+            if(count!=0){
+                res.json({"result":-3});//-3---this sid has been used.
+                return;
+            }
+        })
+
         new Student({
             "sid": fields.sid,
             "name":fields.name,
@@ -200,10 +253,10 @@ exports.addStudent=function(req,res){
             "password":fields.password,
         }).save(function(err){
             if(err){
-                res.json({"result":-1});//database exception
+                res.json({"result":-1});//-1---database exception 
                 return;
             }
-            res.json({"result":1});//save success
+            res.json({"result":1});//1---save success
         });
     })
 }
