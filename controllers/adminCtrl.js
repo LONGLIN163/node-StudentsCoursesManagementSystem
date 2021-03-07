@@ -254,6 +254,38 @@ exports.addStudent=function(req,res){
 }
 
 
+exports.deleteStudent=function(req,res){
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        var arr=fields.arr;
+        //console.log("arr---",arr.length)
+        //arr.forEach(aSid => Student.delete(aSid));
+        Student.remove({"sid": arr },function(err,obj){
+            if(err){
+                res.json({"result" : -1});
+            }else{ 
+                console.log(obj)
+                res.json({"result" : obj.n});
+            }
+        })
+
+        /*
+        //*********** this is a big hole, shit*************
+        //var len=arr.length;
+        //console.log("len---",len)
+        var newArr=arr.substring(1,arr.length-1).split(",");
+        console.log("newArr",newArr)
+        Student.deleteOne({"sid":arr[0]},function (err) {
+            if(err){
+                res.json({"result":-1});//-1---database exception. 
+            }else{
+                res.json({"result":1});//1---delete success.
+            }
+        });*/
+    })
+}
+
+
 exports.showAdminCourse=function(req,res){
     res.render("admin/course.ejs",{
         page:"course"

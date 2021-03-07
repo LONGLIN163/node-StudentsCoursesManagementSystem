@@ -1,4 +1,12 @@
 <form id="fileform" action="/admin/student/import" enctype="multipart/form-data" method="post">
     <p><input type="file" name="studentExcel"></p>
     <p><input type="submit" class="btn btn-success" value="upload"></p>
-  </form>
+</form>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script>
+  $("#fileform").on("submit",function(){
+    if(!confirm("Notice, Database will be reset if u upload a excel!")){
+      return false;//false will stop submit
+    }
+  })
+</script>

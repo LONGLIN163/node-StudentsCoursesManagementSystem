@@ -42,7 +42,7 @@
             <!-- Use jqGrid to make a table --> 
             <table id="list"></table> 
             <div id="listnav"></div>
-            <input type="button" value="delete" id="delbtn">
+            <input type="button" class="btn btn-danger" value="delete" id="delbtn">
           </div>
         </div>
         <a id="infotip" class="infotip" href="#"></a>
@@ -53,7 +53,7 @@
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.js"></script>
     <script type="text/javascript" src="/js/jquery.jqGrid.src.js"></script>
-    <script type="text/javascript" src="/js/grid.locale-cn.js"></script>
+    <script type="text/javascript" src="/js/grid.locale-en.js"></script>
     <script type="text/javascript" src="/js/jquery.poshytip.js"></script>
     <script>
         var lastsel;
@@ -66,14 +66,16 @@
               colModel : [ 
                           {name : 'sid', index : 'sid',  width : 100 , key:true}, 
                           {name : 'name',index : 'name', width : 100 , editable : true}, 
-                          { name : 'grade', 
+                          { 
+                            name : 'grade', 
                             index : 'grade',  
                             width : 100 , 
                             editable : true,
                             edittype:"select",
-                            editoptions : {value : "middle1:middle1; middle2:middle2; middle3:middle3; high1:high1; high2:high2; high3:high3 "}
-                          },
-                          {name : 'password', index : 'password',  width : 100 , editable : true , key:true}, 
+                            editoptions : {
+                              value : "middle1:middle1; middle2:middle2; middle3:middle3; high1:high1; high2:high2; high3:high3 "}
+                            },
+                          {name : 'password', index : 'password',  width : 100 , editable : true}
                         ],
               rowNum : 10,
               rowList : [ 10, 20, 30, 100 ],//how many rows u want to see in each page
@@ -82,6 +84,7 @@
               viewrecords: true,
               autowidth: true,
               height:400,
+              multiselect : true,
               cellEdit: true,
               cellsubmit:"clientArray",
               afterSaveCell: function(rowid,cellname,value,iRow,iCol) {
@@ -124,7 +127,7 @@
           //});
         }
 
-        //bind("input" realtime input captrue
+        //bind("input",... realtime input captrue
         $("#keywordtext").bind("input",function(){
           //console.log($(this).val())
           var keyword=$(this).val();
@@ -134,7 +137,45 @@
                     datatype:'json',
                     postData:{'keyword':keyword}, //send data 
                     }).trigger("reloadGrid");
+        });
 
+        ////*********** this is a big hole, shit*************
+        /*      
+        $("#delbtn").click(function() {
+          //console.log($("#list").jqGrid('getGridParam', 'selarrrow'));
+          var arr=$("#list").jqGrid('getGridParam', 'selarrrow');
+          $.ajax({
+            type:"delete",
+            url:"/student",
+            data: {"arr":JSON.stringify(arr)},// pass a array to delete interface
+            success:function(data){
+              alert(data.result);
+
+            } 
+          })
+        }); */
+
+        $("#delbtn").click(function() {
+          //console.log($("#list").jqGrid('getGridParam', 'selarrrow'));
+          var arr=$("#list").jqGrid('getGridParam', 'selarrrow');
+          if(!confirm("Be carefu, u really wanna delete these data？")){
+            return;
+          }
+          $.ajax({
+            "url" : "/student",
+            "type" : "delete",
+            "dataType": "json", 
+            "traditional" : true,// this is very important
+            "data" : {"arr" : arr},
+            "success" : function(data){
+               $("#list").trigger("reloadGrid");
+               if(data.result == -1){
+                  alert("delete faile");
+               }else{
+                 alert("success delete " + data.result + " documents data");
+               }
+            }
+          })
         });
     </script>
 
