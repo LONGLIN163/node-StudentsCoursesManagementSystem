@@ -104,10 +104,7 @@
           return;
         }
         //*****validate if the sid has been used.
-<<<<<<< HEAD
-=======
         $this=$(this);
->>>>>>> devTest
         $.ajax({
           type:"propfind",
           url:"/student/"+$("input[name=sid]").val(),
@@ -115,15 +112,6 @@
               //console.log("data",data)
               if(data.result==0){
                 invalid.sid=false;
-<<<<<<< HEAD
-                $(this).successTip("Congrat! this sid has not been used!!!");
-              }else if(data.result>0){
-                invalid.sid=true;
-                $(this).dangerTip("Sorry! this sid has been used, please use another one!!!");
-              }else{
-                invalid.sid=true;
-                $(this).dangerTip("Sorry! Server error!!!");
-=======
                 $this.successTip("Congrat! this sid has not been used!!!");
               }else if(data.result>0){
                 invalid.sid=true;
@@ -131,7 +119,6 @@
               }else{
                 invalid.sid=true;
                 $this.dangerTip("Sorry! Server error!!!");
->>>>>>> devTest
               }
           } 
         })
