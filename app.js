@@ -29,6 +29,8 @@ app.post('/admin/student/import',adminCtrl.doAdminStudentImport);
 app.get('/admin/student/add',adminCtrl.showAdminStudentAdd);
 app.post('/student',adminCtrl.addStudent); //add student
 
+app.propfind('/student/:sid',adminCtrl.checkStudentExist)
+
 app.get('/admin/course',adminCtrl.showAdminCourse);
 app.get('/admin/report',adminCtrl.showAdminReport);
 

@@ -36,7 +36,6 @@
                   <p>sid:</p>
                   <p>
                     <input type="text" class="form-control" id="sidTxt" checkValid>
-                   
                   </p>
                   <p>name:</p>
                   <p><input type="text" class="form-control" id="nameTxt" checkValid></p>
@@ -85,8 +84,9 @@
           this.after($("<div class='alert alert-danger myAlert' role='alert'>"+tip+"</div>"));         
         },
         "clearTip":function(){
-          this.nextAll(".alert").remove();         
-        },
+          console.log(111111111111111111)
+          this.nextAll(".alert").remove();
+        }
       })
       /*
       $("div").each(function(){
@@ -97,14 +97,31 @@
       $("#sidTxt").blur(function(){
         var _sid=$(this).val();//-sid is user input
         console.log("_sid",_sid);
-        if(/^[\d]{9}$/.test(_sid)){
-          invalid.sid=false;
-          $(this).successTip("Success, sid correct!!!");
-        }else{
+        // regexp validation first
+        if(!/^[\d]{9}$/.test(_sid)){
           invalid.sid=true;
-          $(this).dangerTip("Sid must be a nine-digit number!!!");
-          //this.alertTip()
+          $(this).dangerTip("Could not pass regexp,Sid must be a nine-digit number!!!");
+          return;
         }
+        //*****validate if the sid has been used.
+        $this=$(this);
+        $.ajax({
+          type:"propfind",
+          url:"/student/"+$("input[name=sid]").val(),
+          success:function(data){
+              //console.log("data",data)
+              if(data.result==0){
+                invalid.sid=false;
+                $this.successTip("Congrat! this sid has not been used!!!");
+              }else if(data.result>0){
+                invalid.sid=true;
+                $this.dangerTip("Sorry! this sid has been used, please use another one!!!");
+              }else{
+                invalid.sid=true;
+                $this.dangerTip("Sorry! Server error!!!");
+              }
+          } 
+        })
       })
 
       // ----Validate name
@@ -140,7 +157,7 @@
       })
 
       // ----Validate password
-      $("#passwordTxt").blur(function(){
+      $("#passwordTxt").change(function(){
         var _password=$(this).val();
         console.log("_password",_password);
 
@@ -165,10 +182,7 @@
         return lv;
     }
 
-      // liston all the field
-      $("[checkValid]").bind("focus change",function(){// bind two events
-        $(this).clearTip();
-      })
+
 
       // *************get if all fields with checkVaid attr is true, enable submitbtn**************
       $("[checkValid]").blur(function(){
@@ -190,6 +204,11 @@
         console.log("invalid",invalid);
     })
 
+    // liston all the field
+    $("[checkValid]").bind("focus change",function(){// bind two events
+        console.log(22222222222222222)
+        $(this).clearTip();
+    })
     
 
     //*************************
@@ -210,7 +229,7 @@
         if(result==1){
           alert("add student success")
            //after post success, reset add page and...
-          $("input").val("");//empty all inputs
+           $("input[type=text]").val("");//empty all inputs
           //and set all 
           var invalid={
             "sid":true,
@@ -218,9 +237,18 @@
             "grade":true,
             "password":true
           };
-
+        }else if(result==-2){
+          alert("You r trying to skip the front-end valitation, but the server discovers your sid is illegal!")
+        }else if(result==-3){
+          alert("You r trying to skip the front-end valitation, but the server discovers this sid has been used!")
+        }else if(result==-4){
+          alert("You r trying to skip the front-end valitation, but the server discovers your name is illegal!")
+        }else if(result==-5){
+          alert("You r trying to skip the front-end valitation, but the server discovers you havent select any grade!")
+        }else if(result==-6){
+          alert("You r trying to skip the front-end valitation, but the server discovers you pwd is not enough save!")
         }else{
-          alert("add student failed")
+          alert("Server error!")
         }
       })
     })
