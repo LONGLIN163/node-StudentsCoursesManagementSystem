@@ -27,7 +27,9 @@ app.get('/admin/student/import',adminCtrl.showAdminStudentImport);
 app.post('/admin/student/import',adminCtrl.doAdminStudentImport);
 
 app.get('/admin/student/add',adminCtrl.showAdminStudentAdd);
-app.post('/student',adminCtrl.addStudent); //add student
+app.post('/student',adminCtrl.addStudent); //add a student
+
+app.delete('/student',adminCtrl.deleteStudent); //delete a student
 
 app.propfind('/student/:sid',adminCtrl.checkStudentExist)
 
@@ -35,6 +37,7 @@ app.get('/admin/course',adminCtrl.showAdminCourse);
 app.get('/admin/report',adminCtrl.showAdminReport);
 
 app.get('/student',adminCtrl.getAllStudents); //get all students
+
 app.post('/student/:sid',adminCtrl.updateStudent); //modify some student
 
 //Set static file
