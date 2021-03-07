@@ -7,4 +7,4 @@ the teach stacks covers node, mongoDB&mongoose, express, jquery, jqueryUI, boots
 
 ### Connect to database 
 
-Create an empty database, then connect it:hahahahah....
+Create an empty database, then connect it:hahahahah123
