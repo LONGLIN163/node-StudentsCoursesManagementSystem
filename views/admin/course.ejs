@@ -7,8 +7,10 @@
     <title>Node-StudentsCoursesManagementSystem</title>
     <link href="/css/application-a07755f5.css" rel="stylesheet" type="text/css" />
     <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="/css/iconfont.css" rel="stylesheet" type="text/css"></head>
-    
+    <link href="/css/iconfont.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/ui.jqgrid.css">
+    <link href="/css/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css">
+    <link href="/css/tip-yellowsimple.css" rel="stylesheet" type="text/css">
   </head>
   <body class='main page'>
     <!-- Navbar -->
@@ -32,13 +34,130 @@
             Lessions:
           </div>
           <div class="panel-body">
+            <div class="row searchbox">
+              <div class="col-lg-4">
+                <input type="text" class="form-control" placeholder="search course here..." autofocus id="keywordtext">
+              </div>
+            </div>
+            
+            <!-- Use jqGrid to make a table --> 
+            <table id="list"></table> 
+            <div id="listnav"></div>
+            <input type="button" class="btn btn-danger" value="delete" id="delbtn">
+          </div>
 
           </div>
         </div>
       </div>
     </div>
     <!-- Footer -->
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
+<!-- Footer -->
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/jquery.jqGrid.src.js"></script>
+<script type="text/javascript" src="/js/grid.locale-en.js"></script>
+<script type="text/javascript" src="/js/jquery.poshytip.js"></script>
+<script>
+    var lastsel;
+    // initialize table
+    $("#list").jqGrid( {
+          //datatype : "local",
+          datatype : "json",
+          url : "/course",
+          colNames : [ 'cid','name','dayofweek','allow','number','teacher','brief'],
+          colModel : [ 
+                      {name : 'cid', index : 'cid',  width : 20 , key:true}, 
+                      {name : 'name',index : 'name', width : 30 , editable : true}, 
+                      {name : 'dayofweek',index : 'dayofweek', width : 20 , editable : true}, 
+                      {name : 'allow',index : 'allow', width : 60 , editable : true}, 
+                      {name : 'number',index : 'number', width : 20 , editable : true}, 
+                      {name : 'teacher', index : 'teacher',  width : 30 , editable : true},
+                      {name : 'briefintro', index : 'briefintro',  width : 150 , editable : true, edittype:"textarea"}
+                    ],
+          rowNum : 10,
+          rowList : [ 10, 20, 30],//how many rows u want to see in each page
+          sortname : 'sid',
+          pager : '#listnav',
+          viewrecords: true,
+          autowidth: true,
+          height:400,
+          multiselect : true,
+          cellEdit: true,
+          cellsubmit:"clientArray",
+          afterSaveCell: function(rowid,cellname,value,iRow,iCol) {
+              //alert(rowid);
+              //console.log(rowid,name,val,iRow,iCol)
+              var sid =$("#list").getCell(rowid,0);
+              console.log(sid,cellname,value)
+              //send request here
+              $.post("/student/"+sid,{
+                 cellname:cellname,
+                 value:value
+              },function(data){
+                console.log("data",data.result)
+                var result=data.result;
+                if(result==1){
+                  //alert("success")
+                  showTip("success");
+                }else if(result==-1){
+                  showTip("cant find this student")
+                }else if(result==-2){
+                  showTip("database error")
+                }
+              })
+          }
+    })
+
+    function showTip(coutent){
+      $('#infotip').poshytip({
+        className: 'tip-yellowsimple',
+        content: coutent,
+        showOn: 'none',
+        alignTo: 'target',
+        alignX: 'inner-left',
+        offsetX: 0,
+        offsetY: 5
+      });
+      //$('#delbtn').click(function() { 
+        //$('#infotip').poshytip('show').poshytip('showDelayed', 2000);
+        $('#infotip').poshytip('show').poshytip('hideDelayed', 1000);
+      //});
+    }
+
+    //bind("input",... realtime input captrue
+    $("#keywordtext").bind("input",function(){
+      //console.log($(this).val())
+      var keyword=$(this).val();
+      // send ajax request
+      $("#list").jqGrid('clearGridData');  
+      $("#list").jqGrid('setGridParam',{
+                datatype:'json',
+                postData:{'keyword':keyword}, //send data 
+                }).trigger("reloadGrid");
+    });
+
+    $("#delbtn").click(function() {
+      //console.log($("#list").jqGrid('getGridParam', 'selarrrow'));
+      var arr=$("#list").jqGrid('getGridParam', 'selarrrow');
+      if(!confirm("Be carefu, u really wanna delete these data？")){
+        return;
+      }
+      $.ajax({
+        "url" : "/student",
+        "type" : "delete",
+        "dataType": "json", 
+        "traditional" : true,// this is very important
+        "data" : {"arr" : arr},
+        "success" : function(data){
+           $("#list").trigger("reloadGrid");
+           if(data.result == -1){
+              alert("delete faile");
+           }else{
+             alert("success delete " + data.result + " documents data");
+           }
+        }
+      })
+    });
+</script>
   </body>
 </html>

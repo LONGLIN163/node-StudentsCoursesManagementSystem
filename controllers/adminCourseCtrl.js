@@ -1,6 +1,7 @@
 var formidable = require('formidable');
 var path = require("path");// use for get extensions
 var fs = require("fs");
+var url = require("url");
 var Course = require("../models/Course");
 const { json } = require('express');
 var mongoose=require("mongoose");
@@ -9,6 +10,58 @@ exports.showAdminCourse=function(req,res){
     res.render("admin/course.ejs",{
         page:"course"
     });
+}
+
+//test: course?_search=false&nd=1614792646180&rows=2&page=1&sidx=sid&sord=asc&keyword=
+exports.getAllCourses=function(req,res){
+    /*
+    Student.find({},function(err,results){
+        console.log(results)
+    })*/
+    var rows=parseInt(url.parse(req.url,true).query.rows);
+    var page=parseInt(url.parse(req.url,true).query.page);
+    //console.log(typeof rows);
+
+    var sidx=url.parse(req.url,true).query.sidx;
+    var sord=url.parse(req.url,true).query.sord;
+    var sordNumber=sord=="asc"?1:-1;
+
+    var keyword=url.parse(req.url,true).query.keyword;
+
+    // *******************fuzzy query**********************
+    var findFilter={};
+    if(keyword===undefined || keyword==""){
+        var findFilter={};
+    }else{
+        var regexp=new RegExp(keyword,"g");
+        findFilter={
+            $or:[
+                {"cid":regexp},
+                {"name":regexp},
+                {"teacher":regexp},
+                {"briefintro":regexp}
+            ]
+        }
+    }
+    //console.log("findFilter",findFilter);
+
+    Course.count(findFilter,function(err,count){
+        var total=Math.ceil(count/rows);
+        var sortObj={};
+        sortObj[sidx]=sordNumber;
+
+        //Student.find({}).sort(sortObj).limit(rows).skip(rows*page).exec(function(err,results){
+            Course.find(findFilter).sort(sortObj).limit(rows).skip(rows*(page-1)).exec(function(err,results){
+            //console.log(results)
+            res.json({
+                "record":count,
+                "total":total,
+                "page":page,
+                "rows":results
+            })
+        })
+
+    })
 }
 
 exports.showAdminCourseImport=function(req,res){

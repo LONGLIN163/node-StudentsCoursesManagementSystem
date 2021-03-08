@@ -42,6 +42,8 @@ app.get('/admin/course/import'   ,adminCourseCtrl.showAdminCourseImport);
 app.post('/admin/course/import'  ,adminCourseCtrl.doAdminCourseImport);
 app.get('/admin/course/add'      ,adminCourseCtrl.showAdminCourseAdd);
 
+app.get('/course'                ,adminCourseCtrl.getAllCourses); //get all students
+
 app.get('/admin/report'          ,adminCtrl.showAdminReport);
 
 //Set static file
