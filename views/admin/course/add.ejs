@@ -33,27 +33,54 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-lg-5">
-                  <p>sid:</p>
+                  <p>course id:</p>
                   <p>
-                    <input type="text" class="form-control" id="sidTxt" checkValid>
+                    <input type="text" class="form-control" id="cidTxt" checkValid>
                   </p>
-                  <p>name:</p>
-                  <p><input type="text" class="form-control" id="nameTxt" checkValid></p>
-                  <p>grade:</p>
+
+                  <p>Course name:</p>
                   <p>
-                    <select name="" class="form-control" id="gradeSelect" checkValid>
-                      <option value="middle1">Please select your grade...</option>
-                      <option value="middle1">middle1</option>
-                      <option value="middle2">middle2</option>
-                      <option value="middle3">middle3</option>
-                      <option value="high1"  >high1</option>
-                      <option value="high2"  >high2</option>
-                      <option value="high3"  >high3</option>
-                    </select
+                    <input type="text" class="form-control" id="nameTxt" checkValid>
+                  </p>
+
+                  <p>Day of week:</p>
+                  <p>
+                    <select name="" class="form-control" id="dayOfWeekSel" checkValid>
+                      <option value="">Please select a day...</option>
+                      <option value="周二">周二</option>
+                      <option value="周三">周三</option>
+                      <option value="周五">周五</option>
+                    </select>
+                  </p>
+
+                  <p>Allowed grade:</p>
+                  <p>
+                   <label><input type="checkbox" name="allowedCheck" class="form-control" value="初一" checkValid>初一</label>
+                   <label><input type="checkbox" name="allowedCheck" class="form-control" value="初二" checkValid>初二</label>
+                   <label><input type="checkbox" name="allowedCheck" class="form-control" value="初三" checkValid>初三</label>
+                   <label><input type="checkbox" name="allowedCheck" class="form-control" value="高一" checkValid>高一</label>
+                   <label><input type="checkbox" name="allowedCheck" class="form-control" value="高二" checkValid>高二</label>
+                   <label><input type="checkbox" name="allowedCheck" class="form-control" value="高三" checkValid>高三</label>
                  </p>
-                 <p>initial password:</p>
-                 <p><input type="text" class="form-control" id="passwordTxt" checkValid></p>
-                 <p><input type="button" value="add" class="btn btn-success" id="submitbtn" disabled></p>
+
+                 <p>Allowed number:</p>
+                 <p>
+                   <input type="text" class="form-control" id="numTxt" checkValid>
+                 </p>
+
+                 <p>Teacher:</p>
+                 <p>
+                   <input type="text" class="form-control" id="teacherTxt" checkValid>
+                 </p>
+
+                 <p>Course intro:</p>
+                 <p>
+                   <textarea class="form-control" id="introTxt" checkValid cols="70" rows="10"></textarea>
+                 </p>
+
+                 <p>
+                   <input type="button" value="add" class="btn btn-success" id="submitbtn">
+                 </p>
               </div>
 
             </div> 
@@ -65,7 +92,53 @@
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.js"></script>
     <script>
+ 
+    //*************************
+    $("#submitbtn").click(function(){
+      var cid=$("#cidTxt").val();
+      var name=$("#nameTxt").val();
+      var dayofweek=$("#dayOfWeekSel").val();
+      var allow=(function(){//*************here has to use the closure function
+        var arr=[];
+        $("input[name=allowedCheck]:checked").each(function(){
+            arr.push($(this).val());
+        });
+        return arr;
+      })()
       
+      console.log("allowed",allow)
+
+      var number=$("#numTxt").val();
+      var teacher=$("#teacherTxt").val();
+      var briefintro=$("#introTxt").val();
+
+      $.ajax({
+        "url" : "/course",
+        "type":"post",
+        "dataType": "json", // jquery subimit array need this one
+        "traditional" : true,
+        "data" : {
+          cid       : cid,
+          name      : name,
+          dayofweek : dayofweek,
+          allow     : allow,
+          number    : number,
+          teacher   : teacher,
+          briefintro:briefintro
+      },
+      "success" :function(data){
+          console.log("data",data.result)
+          var result=data.result;
+          if(result==-3){
+            alert("course id conflicts!")
+          }else if(result==-1){
+            alert("Server error!")
+          }else{
+            alert("Success!")
+          }
+        }
+     })
+    })
     </script>
   </body>
 </html>

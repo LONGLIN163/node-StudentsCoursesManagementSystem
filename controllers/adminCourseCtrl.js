@@ -147,6 +147,46 @@ exports.deleteCourse=function(req,res){
     })
 }
 
+exports.addCourse=function(req,res){
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        if(err){
+            res.json({"result":-1});//-1---database exception. 
+            return;
+        }
+
+       // only validate cid in the backend
+        var cid=fields.cid;
+        Course.count({"cid":cid},function(err,count){//This is asyc function, put it back here.
+            if(err){
+                res.json({"result":-1});//-1---database exception. 
+                return;
+            }
+            if(count!=0){
+                res.json({"result":-3});//-3---this cid has been used.
+                return;
+            }
+        })
+
+        new Course({
+            cid       : fields.cid ,     
+            name      : fields.name,   
+            dayofweek : fields.dayofweekk,
+            allow     : fields.allow, 
+            number    : fields.number ,  
+            teacher   : fields.teacher , 
+            briefintro: fields.briefintro
+        }).save(function(err){
+            if(err){
+                res.json({"result":-1});//-1---database exception 
+                return;
+            }
+            res.json({"result":1});//1---save success
+        });
+    })
+}
+
+
 exports.showAdminCourseAdd=function(req,res){
     res.render("admin/course/add.ejs",{
         page:"course"

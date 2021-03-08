@@ -43,6 +43,7 @@ app.post('/admin/course/import'  ,adminCourseCtrl.doAdminCourseImport);
 app.get('/admin/course/add'      ,adminCourseCtrl.showAdminCourseAdd);
 app.post('/admin/course/'        ,adminCourseCtrl.updateCourse); //modify some course
 app.delete('/course'             ,adminCourseCtrl.deleteCourse); 
+app.post('/course'               ,adminCourseCtrl.addCourse);
 
 app.get('/course'                ,adminCourseCtrl.getAllCourses); //get all students
 
