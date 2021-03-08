@@ -12,7 +12,7 @@ var studentSchema = new mongoose.Schema({
 //Read data from excel files and save them to database.
 studentSchema.statics.importStudent=function(workSheetsFromFile) {
     var str = "ABDEFGHJKLMNPQRTUVWXYZabdefghijkmnpqrtuvwxyz23456789&$%#@!";
-    var gradeArr=["middle1","middle1","middle1","high1","high2","high3"];
+    var gradeArr=["middle1","middle2","middle3","high1","high2","high3"];
     //delete old collection
     mongoose.connection.collections['students'].drop( function() {//delete data from the last database,then save new data into it
 
