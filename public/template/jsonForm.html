@@ -1,11 +1,11 @@
-<form id="fileform" action="/admin/student/import" enctype="multipart/form-data" method="post">
-    <p><input type="file" name="studentExcel"></p>
+<form id="fileform" action="/admin/course/import" enctype="multipart/form-data" method="post">
+    <p><input type="file" name="courseJson"></p>
     <p><input type="submit" class="btn btn-success" value="upload"></p>
 </form>
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <script>
   $("#fileform").on("submit",function(){
-    if(!confirm("Notice, Students data will be reset if u upload a excel!")){
+    if(!confirm("Notice, Courses data will be reset if u upload a json file!")){
       return false;//false will stop submit
     }
   })

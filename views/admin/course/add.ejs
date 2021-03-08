@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html class='no-js' lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Node-StudentsCoursesManagementSystem</title>
+    <link href="/css/application-a07755f5.css" rel="stylesheet" type="text/css" />
+    <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/iconfont.css" rel="stylesheet" type="text/css"></head>
+    
+  </head>
+  <body class='main page'>
+    <!-- Navbar -->
+    <%- include('../include/header') %> 
+    <div id='wrapper'>
+      <!-- Sidebar -->
+      <%- include('../include/sideBar') %>
+      <!-- Tools -->
+      <section id='tools'>
+        <ul class='breadcrumb' id='breadcrumb'>
+          <li><a href="/admin/course">Courses</a></li>
+          <li><a href="/admin/course/import">Import Courses</a></li>
+          <li class='active'>Add Course</li>
+        </ul>
+      </section>
+      <!-- Content -->
+      <div id='content'>
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            Add Course
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-5">
+                  <p>sid:</p>
+                  <p>
+                    <input type="text" class="form-control" id="sidTxt" checkValid>
+                  </p>
+                  <p>name:</p>
+                  <p><input type="text" class="form-control" id="nameTxt" checkValid></p>
+                  <p>grade:</p>
+                  <p>
+                    <select name="" class="form-control" id="gradeSelect" checkValid>
+                      <option value="middle1">Please select your grade...</option>
+                      <option value="middle1">middle1</option>
+                      <option value="middle2">middle2</option>
+                      <option value="middle3">middle3</option>
+                      <option value="high1"  >high1</option>
+                      <option value="high2"  >high2</option>
+                      <option value="high3"  >high3</option>
+                    </select
+                 </p>
+                 <p>initial password:</p>
+                 <p><input type="text" class="form-control" id="passwordTxt" checkValid></p>
+                 <p><input type="button" value="add" class="btn btn-success" id="submitbtn" disabled></p>
+              </div>
+
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script>
+      
+    </script>
+  </body>
+</html>
