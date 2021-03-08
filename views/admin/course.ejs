@@ -95,7 +95,7 @@
             jQuery('#list').jqGrid('editRow', id, true, allowChoose);
             lastsel3 = id;
             }
-          },
+          }
           // edit cell(with event)---method2
           /*
           cellEdit: true, 
@@ -104,28 +104,6 @@
               //console.log("rowId",rowId)
               allowChoose(rowId);
 	        },*/
-          afterSaveCell: function(rowid,cellname,value,iRow,iCol) {
-              //alert(rowid);
-              //console.log(rowid,name,val,iRow,iCol)
-              var sid =$("#list").getCell(rowid,0);
-              console.log(sid,cellname,value)
-              //send request here
-              $.post("/course/"+sid,{
-                 cellname:cellname,
-                 value:value
-              },function(data){
-                console.log("data",data.result)
-                var result=data.result;
-                if(result==1){
-                  //alert("success")
-                  showTip("success");
-                }else if(result==-1){
-                  showTip("cant find this student")
-                }else if(result==-2){
-                  showTip("database error")
-                }
-              })
-          }
     })
 
     function allowChoose(id){
@@ -189,7 +167,7 @@
         return;
       }
       $.ajax({
-        "url" : "/student",
+        "url" : "/course",
         "type" : "delete",
         "dataType": "json", 
         "traditional" : true,// this is very important

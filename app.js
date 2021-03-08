@@ -41,6 +41,8 @@ app.get('/admin/course'          ,adminCourseCtrl.showAdminCourse);
 app.get('/admin/course/import'   ,adminCourseCtrl.showAdminCourseImport);
 app.post('/admin/course/import'  ,adminCourseCtrl.doAdminCourseImport);
 app.get('/admin/course/add'      ,adminCourseCtrl.showAdminCourseAdd);
+app.post('/admin/course/'        ,adminCourseCtrl.updateCourse); //modify some course
+app.delete('/course'             ,adminCourseCtrl.deleteCourse); 
 
 app.get('/course'                ,adminCourseCtrl.getAllCourses); //get all students
 

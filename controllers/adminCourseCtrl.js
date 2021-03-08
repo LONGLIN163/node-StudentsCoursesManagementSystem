@@ -95,6 +95,58 @@ exports.doAdminCourseImport=function(req,res){
     });
 }
 
+exports.updateCourse=function(req,res){
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+          var key=fields.cellname;
+          var value=fields.value;
+          var cid = fields.cid;
+          Course.find({"cid":cid},function(err,results){
+              if(err){
+                res.send({"result":-2});//database exception
+                return;
+              }
+              if(results.length==0){
+                res.send({"result":-1});//no such student
+                return;
+              }
+              var thecourse=results[0];
+              thecourse.name = fields.name;
+              thecourse.dayofweek = fields.dayofweek;
+              thecourse.number = fields.number;
+              thecourse.allow = fields.allow.split(",");
+              thecourse.teacher = fields.name;
+              thecourse.briefintro = fields.briefintro;
+              thecourse.save(function(err){
+                if(err){
+                    res.send({"result":-2});//database exception
+                    return;
+                }
+                res.send({"result":1});//save success
+              });
+
+          })
+    })
+}
+
+exports.deleteCourse=function(req,res){
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        var arr=fields.arr;
+        //console.log("arr---",arr.length)
+        //arr.forEach(aSid => Student.delete(aSid));
+        Course.remove({"cid": arr },function(err,obj){
+            if(err){
+                res.json({"result" : -1});
+            }else{ 
+                console.log(obj)
+                res.json({"result" : obj.n});
+            }
+        })
+
+    })
+}
+
 exports.showAdminCourseAdd=function(req,res){
     res.render("admin/course/add.ejs",{
         page:"course"
