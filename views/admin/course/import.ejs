@@ -12,16 +12,15 @@
   </head>
   <body class='main page'>
     <!-- Navbar -->
-    <%- include('include/header') %> 
-
+    <%- include('../include/header') %> 
     <div id='wrapper'>
       <!-- Sidebar -->
-      <%- include('include/sideBar') %>
+      <%- include('../include/sideBar') %>
       <!-- Tools -->
       <section id='tools'>
         <ul class='breadcrumb' id='breadcrumb'>
-          <li class='active'>Courses</li>
-          <li><a href="/admin/course/import">Import Courses</a></li>
+          <li><a href="/admin/course">Courses</a></li>
+          <li class='active'>Import Courses</li>
           <li><a href="/admin/course/add">Add Course</a></li>
         </ul>
       </section>
@@ -29,16 +28,22 @@
       <div id='content'>
         <div class='panel panel-default'>
           <div class='panel-heading'>
-            Lessions:
+            Import Json format file
           </div>
           <div class="panel-body">
+            <p>import json format file here</p>
+            <!-- use iframe to embed html to the current webpage -->
+            <iframe src="/template/jsonForm.html" frameborder="0">
+
+            </iframe>
 
           </div>
         </div>
       </div>
     </div>
     <!-- Footer -->
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+
   </body>
 </html>
