@@ -3,6 +3,8 @@ var mongoose=require("mongoose");
 var session=require("express-session");
 
 var adminCtrl=require("./controllers/adminCtrl");
+var adminStudentCtrl=require("./controllers/adminStudentCtrl");
+
 //Create express app obj
 var app = express();
 //Connect to database
@@ -20,25 +22,26 @@ app.use(session({
 //Set model engine
 app.set("view engine","ejs");
 //Middlewares,routers
-app.get('/admin',adminCtrl.showAdminDashboard);
-app.get('/admin/student',adminCtrl.showAdminStudent);
+app.get('/admin'                 ,adminCtrl.showAdminDashboard);
+app.get('/admin/student'         ,adminStudentCtrl.showAdminStudent);
 
-app.get('/admin/student/import',adminCtrl.showAdminStudentImport);
-app.post('/admin/student/import',adminCtrl.doAdminStudentImport);
+app.get('/admin/student/import'  ,adminStudentCtrl.showAdminStudentImport);
+app.post('/admin/student/import' ,adminStudentCtrl.doAdminStudentImport);
+app.get("/admin/student/download",adminStudentCtrl.downloadStudentXlsx);
 
-app.get('/admin/student/add',adminCtrl.showAdminStudentAdd);
-app.post('/student',adminCtrl.addStudent); //add a student
+app.get('/admin/student/add'     ,adminStudentCtrl.showAdminStudentAdd);
+app.post('/student'              ,adminStudentCtrl.addStudent); //add a student
 
-app.delete('/student',adminCtrl.deleteStudent); //delete a student
+app.delete('/student'            ,adminStudentCtrl.deleteStudent); //delete a student
 
-app.propfind('/student/:sid',adminCtrl.checkStudentExist)
+app.propfind('/student/:sid'     ,adminStudentCtrl.checkStudentExist)
 
-app.get('/admin/course',adminCtrl.showAdminCourse);
-app.get('/admin/report',adminCtrl.showAdminReport);
+app.get('/admin/course'          ,adminCtrl.showAdminCourse);
+app.get('/admin/report'          ,adminCtrl.showAdminReport);
 
-app.get('/student',adminCtrl.getAllStudents); //get all students
+app.get('/student'               ,adminStudentCtrl.getAllStudents); //get all students
 
-app.post('/student/:sid',adminCtrl.updateStudent); //modify some student
+app.post('/student/:sid'         ,adminStudentCtrl.updateStudent); //modify some student
 
 //Set static file
 app.use(express.static("public"));
