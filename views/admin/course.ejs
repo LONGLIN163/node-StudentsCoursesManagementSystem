@@ -58,7 +58,8 @@
 <script type="text/javascript" src="/js/grid.locale-en.js"></script>
 <script type="text/javascript" src="/js/jquery.poshytip.js"></script>
 <script>
-    var lastsel;
+
+    var lastsel3;
     // initialize table
     $("#list").jqGrid( {
           //datatype : "local",
@@ -68,8 +69,12 @@
           colModel : [ 
                       {name : 'cid', index : 'cid',  width : 20 , key:true}, 
                       {name : 'name',index : 'name', width : 30 , editable : true}, 
-                      {name : 'dayofweek',index : 'dayofweek', width : 20 , editable : true}, 
-                      {name : 'allow',index : 'allow', width : 60 , editable : true}, 
+                      {name : 'dayofweek',index : 'dayofweek', width : 20 , editable : true, edittype:"select",
+                      editoptions : {
+                              value : "2:周二; 3:周三; 5:周五"
+                            }
+                      }, 
+                      {name : 'allow',index : 'allow', width : 100 , editable : true}, 
                       {name : 'number',index : 'number', width : 20 , editable : true}, 
                       {name : 'teacher', index : 'teacher',  width : 30 , editable : true},
                       {name : 'briefintro', index : 'briefintro',  width : 150 , editable : true, edittype:"textarea"}
@@ -82,15 +87,30 @@
           autowidth: true,
           height:400,
           multiselect : true,
-          cellEdit: true,
-          cellsubmit:"clientArray",
+          multiboxonly: true,
+          // edit cell(with event)---method1
+          onSelectRow : function(id) {
+            if (id && id !== lastsel3) {
+            jQuery('#list').jqGrid('restoreRow', lastsel3);
+            jQuery('#list').jqGrid('editRow', id, true, allowChoose);
+            lastsel3 = id;
+            }
+          },
+          // edit cell(with event)---method2
+          /*
+          cellEdit: true, 
+          afterEditCell: function(rowId, cellName, value, iRow, iCol){//use afterE...
+	            //console.log("value",value)
+              //console.log("rowId",rowId)
+              allowChoose(rowId);
+	        },*/
           afterSaveCell: function(rowid,cellname,value,iRow,iCol) {
               //alert(rowid);
               //console.log(rowid,name,val,iRow,iCol)
               var sid =$("#list").getCell(rowid,0);
               console.log(sid,cellname,value)
               //send request here
-              $.post("/student/"+sid,{
+              $.post("/course/"+sid,{
                  cellname:cellname,
                  value:value
               },function(data){
@@ -108,11 +128,37 @@
           }
     })
 
+    function allowChoose(id){
+      console.log(123456);
+      //css("background","red");
+      $("#"+id+"_allow").hide();
+      $("#"+id+"_allow").after(
+        "<label><input type='checkbox' value='初一'/>初一</label><label><input type='checkbox' value='初二'/>初二</label><label><input type='checkbox' value='初三'/>初三</label><label><input type='checkbox' value='高一'/>高一</label><label><input type='checkbox' value='高二'/>高二</label><label><input type='checkbox' value='高三'/>高三</label>");
+
+        //get allowed grade field
+        var dataArr=$("#"+id+"_allow").val().split(",");
+        //check them
+        $.each(dataArr,function(kay,value){
+          $("input[value="+value+"]").attr("checked",true);
+        })
+
+        //double bind.
+        $("#"+id+"_allow").nextAll().change(function(){
+          var checkedGrade=[];
+          $("#"+id+"_allow").nextAll().find(":checked").each(function(){
+              checkedGrade.push($(this).val());
+          })
+          console.log("checkedGrade",checkedGrade)
+          $("#"+id+"_allow").val(checkedGrade.join(","));// put back the checked value to the grade field
+        })
+
+    }
+
     function showTip(coutent){
       $('#infotip').poshytip({
         className: 'tip-yellowsimple',
         content: coutent,
-        showOn: 'none',
+        showOn: 'none', 
         alignTo: 'target',
         alignX: 'inner-left',
         offsetX: 0,
