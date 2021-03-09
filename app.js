@@ -2,9 +2,11 @@ var express=require("express");
 var mongoose=require("mongoose");
 var session=require("express-session");
 
+
 var adminCtrl=require("./controllers/adminCtrl");
 var adminStudentCtrl=require("./controllers/adminStudentCtrl");
 var adminCourseCtrl=require("./controllers/adminCourseCtrl");
+var mainCtrl=require("./controllers/mainCtrl");
 
 //Create express app obj
 var app = express();
@@ -49,6 +51,8 @@ app.get('/course'                ,adminCourseCtrl.getAllCourses); //get all stud
 
 app.get('/admin/report'          ,adminCtrl.showAdminReport);
 
+app.get('/'                      ,mainCtrl.showLogin);
+ 
 //Set static file
 app.use(express.static("public"));
 //Set 404 info page
