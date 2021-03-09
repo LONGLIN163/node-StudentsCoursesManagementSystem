@@ -7,14 +7,84 @@
     <title>Node-StudentsCoursesManagementSystem</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="/css/iconfont.css" rel="stylesheet" type="text/css"></head>
-    
+    <link href="/css/iconfont.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        html,body{
+            height:100%;
+        }
+        body{
+            background: url(/images/study.jpg)  center right ;
+            background-size: cover;
+        }
+        .loginbox{
+            background-color: rgba(255,255,255,.5);
+            padding-top: 20px;
+        }
+        .loginwrap{
+            margin-top: 50px;
+        }
+        span.alert{
+            display: block;
+            margin-top: 10px;
+        }
+  </style> 
   </head>
   <body class='main page'>
-    <!-- Navbar -->
+      <div class="container">
+          <div class="row loginwrap">
+            <h3>Node-StudentsCoursesManagementSystem</h3>
+            <hr>
+              <div class="col-lg-8 loginbox">
+                  <p>student id</p>
+                  <p>
+                    <input type="text" class="form-control" id="sidTxt">
+                    <span class="alert alert-danger" role="alert"></span>
+                  </p>
+                  <p>password</p>
+                  <p>
+                    <input type="password" class="form-control" id="passwordTxt">
+                  </p>
 
-    <!-- Footer -->
+                  <p>
+                    <input type="button" class="btn btn-success" id="loginbtn" id="passwordTxt" value="login">
+                  </p>
+              </div>
+          </div>
+      </div>
+
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script>
+        $(".alert").hide();
+
+        $("#sidTxt").blur(function(){
+            var sid=$(this).val();
+            console.log("login sid",sid)
+            if(!/^[\d]{9}$/.test(sid)){
+                $("#sidTxt").next().show().removeClass("alert-success").addClass("alert-danger").html("Could not pass regexp,Sid must be a nine-digit number!!!");
+            }
+        })
+
+        $("#sidTxt").focus(function(){
+            $("#sidTxt").next().hide();
+        })
+
+        $("#loginbtn").click(function(){
+            var sid=$("#sidTxt").val();
+            var password=$("#passwordTxt").val();
+            if(!/^[\d]{9}$/.test(sid)){
+                $("#sidTxt").next().show().removeClass("alert-success").addClass("alert-danger").html("Could not pass regexp,Sid must be a nine-digit number!!!");
+                return;
+            }
+
+            // submit login form data
+            $.post("/login",{
+                sid:sid,
+                password:password
+            },function(data){
+
+            })
+        })
+    </script>
   </body>
 </html>
