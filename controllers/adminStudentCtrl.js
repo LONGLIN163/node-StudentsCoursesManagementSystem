@@ -15,6 +15,11 @@ exports.showAdminStudent=function(req,res){
 // receive request from a Get(using jqgrid)
 // data come back like this: student?_search=false&nd=1614792646180&rows=2&page=1&sidx=sid&sord=asc
 exports.getAllStudents=function(req,res){
+    // login validation
+    if(req.session.login != true){
+        res.redirect("/login");
+        return;
+    }
     /*
     Student.find({},function(err,results){
         console.log(results)

@@ -35,7 +35,9 @@ exports.doLogin=function(req,res){
                 //if this student hasnt changed pwd, then compares with the password from the resigter filed's pwd
                 if(results[0].password===password){
                     //********if login success, send a session to the user,it has be in front json result***********
-                    req.session.login = true;
+                    req.session.login=true;
+                    // mean while keep sid in session
+                    req.session.sid=sid;
                     res.json({"result":1});//1: login success
                    
                     return;
@@ -62,5 +64,20 @@ exports.showTable=function(req,res){
         return;
     }
 
-    res.send("haha")
+    // index database to get username
+    var sid=req.session.sid;// get sid from session
+    Student.find({"sid":sid},function(err,results){
+        if(err){
+            res.json({"result":-1});//-1: server error
+            return;
+        }
+        thestudent=results[0];
+            // present home page
+        var name=thestudent.name;
+        res.render("index.ejs",{
+            sid:sid,
+            name:name
+        });
+    })
+
 }
