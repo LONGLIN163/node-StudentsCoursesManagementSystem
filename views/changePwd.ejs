@@ -80,6 +80,13 @@
         $.post("/changePwd",{
                 password:$("#pwd1").val()
             },function(data){
+              var result=data.result;
+              if(result==1){
+                    alert("Change password success, please login with new password!")
+                    window.location="/logout"
+                }else{
+                    alert("Change password failed, please contact with adminstrator!")
+                }
                
             })
         })

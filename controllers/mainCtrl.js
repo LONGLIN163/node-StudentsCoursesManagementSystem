@@ -1,5 +1,6 @@
 var formidable = require('formidable');
 var Student = require("../models/Student");
+var crypto = require("crypto");
 
 
 exports.showLogin=function(req,res){
@@ -49,16 +50,26 @@ exports.doLogin=function(req,res){
                     req.session.changedPassword = false;
                     req.session.grade = results[0].grade;
                     res.json({"result":1});//1: login success
-                   
                     return;
                 }else{
-                    res.json({"result":-3});//-2:username exist, but your pwd is wrong
+                    res.json({"result":-3});//-3:username exist, but your pwd is wrong
+                    return;
+                }         
+            }else{
+                //if this student has changed pwd(sha256), then encrypt the password from login, then compare with the pwd in the database
+                if(results[0].password===crypto.createHash("sha256").update(password).digest("hex")){
+                    
+                    // save info in the session again.
+                    req.session.login=true;
+                    req.session.sid=sid;
+                    req.session.name = results[0].name;
+                    req.session.changedPassword = true;
+                    req.session.grade = results[0].grade;
+                    res.json({"result":1});//1: login success
+                }else{
+                    res.json({"result":-3});//-3:username exist, but your pwd is wrong
                     return;
                 }
-
-               
-            }else{
-                //if this student has changed pwd, then use MD5 encrypt the password from the resigter form,then compare with the pwd in the database
 
             }
 
@@ -112,10 +123,13 @@ exports.doChangePwd=function(req,res){
 
             thestudent.changedPassword=true;
             req.session.changedPassword = true;
-            thestudent.password=password;
+            // ***********MD5 encryption*************
+            //if this student has changed pwd, then use MD5 encrypt the password from the resigter form,then compare with the pwd in the database
+            thestudent.password=crypto.createHash("sha256").update(password).digest("hex");
 
             thestudent.save();
             res.json({"result":1});
+            
         })
     })
 }
