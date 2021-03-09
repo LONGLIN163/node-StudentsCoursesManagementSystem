@@ -6,7 +6,8 @@ var studentSchema = new mongoose.Schema({
     "name":String,
     "grade":String,
     "password":String,
-    "changedPassword":{type:Boolean,default:false}
+    "changedPassword":{type:Boolean,default:false},
+    "mycourses":[String]
   });
 
 //Read data from excel files and save them to database.

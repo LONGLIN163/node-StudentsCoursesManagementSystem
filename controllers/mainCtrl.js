@@ -1,6 +1,7 @@
 var formidable = require('formidable');
 var Student = require("../models/Student");
 var crypto = require("crypto");
+var Course = require("../models/Course");
 
 
 exports.showLogin=function(req,res){
@@ -133,3 +134,29 @@ exports.doChangePwd=function(req,res){
         })
     })
 }
+
+exports.checkCourseApplicable=function(req,res){
+    //update a student course in cmd: db.students.update({sid:'150104009'},{$set:{mycourses:['2']}})
+    var results=[];
+    Student.find({"sid":req.session.sid},function(err,students){
+        var thestudent=students[0];
+        // this student need to find all the days of week of his/her courses.
+        //console.log("his courses---",thestudent.mycourses)
+        var mycourses=thestudent.mycourses;
+        //  map mcourse id to the day of week
+        var cidMapToDayOfWeek={};
+        // check all courses
+        Course.find({},function(err,courses){
+            courses.forEach(function(item){
+               //console.log(item)
+                if(mycourses.indexOf(item.cid)!=-1){
+                    cidMapToDayOfWeek[item.cid]=item.dayofweek;
+                }
+               
+            })
+            console.log(cidMapToDayOfWeek);//{ '2': 'tusday' ,.........}
+            
+        })
+    })
+
+} 

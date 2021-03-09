@@ -39,9 +39,31 @@
         </div><!-- /.container-fluid -->
       </nav>
 
+      <div class="container">
+        <div class="row">
+          <table class="table">
+            <tr>
+              <th style="width: 120px;">cid</th>
+              <th style="width: 120px;">name</th>
+              <th style="width: 120px;">dayofweek</th>
+              <th style="width: 120px;">number</th>
+              <th style="width: 120px;">allow</th>
+              <th style="width: 120px;">teacher</th>
+              <th>briefintro</th>
+            </tr>
+
+          </table> 
+
+        </div>
+
+      </div>
+
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script>
+      $.get("/course",function(data){
+        console.log(data)
+      })
 
     </script>
   </body>

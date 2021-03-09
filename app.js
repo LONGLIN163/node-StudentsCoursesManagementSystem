@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost/scdb', {useNewUrlParser: true});
 //Use session
 //Use session
 app.use(session({
-	secret: 'ElectiveCourseRegisterationSystem', 
+	secret: 'scdb', 
 	cookie: { maxAge: 1000 * 60 * 20 },
 	resave: false ,  
 	saveUninitialized : true
@@ -55,6 +55,7 @@ app.get('/login'                 ,mainCtrl.showLogin);
 app.post('/login'                ,mainCtrl.doLogin);
 app.get('/logout'                ,mainCtrl.doLogout);
 app.get('/'                      ,mainCtrl.showIndex);
+app.get('/checkCourseApplicable' ,mainCtrl.checkCourseApplicable); //get all students
 
 app.get('/changePwd'             ,mainCtrl.showChangePwd);
 app.post('/changePwd'            ,mainCtrl.doChangePwd);
