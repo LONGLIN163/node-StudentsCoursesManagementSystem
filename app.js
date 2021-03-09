@@ -16,10 +16,10 @@ mongoose.connect('mongodb://localhost/scdb', {useNewUrlParser: true});
 //Use session
 //Use session
 app.use(session({
-    secret: 'studnetCourseSystemDB',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
+	secret: 'ElectiveCourseRegisterationSystem', 
+	cookie: { maxAge: 1000 * 60 * 20 },
+	resave: false ,  
+	saveUninitialized : true
   }))
 
 //Set model engine
@@ -51,7 +51,9 @@ app.get('/course'                ,adminCourseCtrl.getAllCourses); //get all stud
 
 app.get('/admin/report'          ,adminCtrl.showAdminReport);
 
-app.get('/'                      ,mainCtrl.showLogin);
+app.get('/login'                 ,mainCtrl.showLogin);
+app.post('/login'                ,mainCtrl.doLogin);
+app.get('/'                      ,mainCtrl.showTable);
  
 //Set static file
 app.use(express.static("public"));
