@@ -53,8 +53,11 @@ app.get('/admin/report'          ,adminCtrl.showAdminReport);
 
 app.get('/login'                 ,mainCtrl.showLogin);
 app.post('/login'                ,mainCtrl.doLogin);
-app.get('/'                      ,mainCtrl.showTable);
- 
+app.get('/logout'                ,mainCtrl.doLogout);
+app.get('/'                      ,mainCtrl.showIndex);
+
+app.get('/changePwd'             ,mainCtrl.showChangePwd);
+app.post('/changePwd'            ,mainCtrl.doChangePwd);
 //Set static file
 app.use(express.static("public"));
 //Set 404 info page

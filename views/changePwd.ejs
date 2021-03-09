@@ -27,9 +27,9 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">My Register</a></li>
-              <li><a href="#">My course</a></li>
-              <li><a href="/changePwd">Change password</a></li>
+              <li><a href="/">My Register</a></li>
+              <li><a href="/myCourse">My course</a></li>
+              <li class="active"><a href="#">Change password</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="active"><a href="">Hello,<%= name %>(<%= sid %> ),you have logged in successfully </a></li>
@@ -38,10 +38,51 @@
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
+      <div class="container">
+        <div class="row">
+          <h3>Please hange your password</h3>
+          <hr>
+            <%if (showTip) { %>
+
+              <div class="alert alert-danger">
+                  The system detect your are still using initial password, please create a new one, then you can use SCMS!
+              </div>
+
+            <% } %>
+            <div class="col-lg-8">
+              <p>Set your password</p>
+              <p>
+                <input type="password" class="form-control" id="pwd1">
+  
+              </p>
+              <p>Repeat your password</p>
+              <p>
+                <input type="password" class="form-control" id="pwd2">
+    
+              </p>
+              <p>
+                <input type="button" class="btn btn-success" id="submitBtn" value="submit">
+              </p>
+          </div>
+          </div>
+    </div>
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script>
+      $("#submitBtn").click(function(){
+        if($("#pwd1").val()!==$("#pwd2").val()){
+          alert("The two passwords r different!")
+          return
+        }
+
+        //if they r the same, post data to api
+        $.post("/changePwd",{
+                password:$("#pwd1").val()
+            },function(data){
+               
+            })
+        })
 
     </script>
   </body>

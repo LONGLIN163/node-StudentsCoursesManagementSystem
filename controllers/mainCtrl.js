@@ -8,6 +8,13 @@ exports.showLogin=function(req,res){
     });
 }
 
+exports.doLogout=function(req,res){
+    req.session.login = false;
+    req.session.name = "";
+    res.redirect("/login");
+    return;
+}
+
 exports.doLogin=function(req,res){
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
@@ -36,8 +43,11 @@ exports.doLogin=function(req,res){
                 if(results[0].password===password){
                     //********if login success, send a session to the user,it has be in front json result***********
                     req.session.login=true;
-                    // mean while keep sid in session
+                    // mean while keep info in session
                     req.session.sid=sid;
+                    req.session.name = results[0].name;
+                    req.session.changedPassword = false;
+                    req.session.grade = results[0].grade;
                     res.json({"result":1});//1: login success
                    
                     return;
@@ -57,27 +67,55 @@ exports.doLogin=function(req,res){
 }
 
 
-exports.showTable=function(req,res){
+exports.showIndex=function(req,res){
     console.log("session:"+req.session.login)
     if(req.session.login != true){
         res.redirect("/login");
         return;
     }
+    // if use dont chang the initial pwd, we dont allow them to see home, force them direct to changepwd page
+    if(req.session.changedPassword == false){
+        res.redirect("/changePwd");
+        return;
+    }
 
-    // index database to get username
-    var sid=req.session.sid;// get sid from session
-    Student.find({"sid":sid},function(err,results){
-        if(err){
-            res.json({"result":-1});//-1: server error
-            return;
-        }
-        thestudent=results[0];
-            // present home page
-        var name=thestudent.name;
-        res.render("index.ejs",{
-            sid:sid,
-            name:name
-        });
+    // present home page
+    res.render("index.ejs",{
+        sid:req.session.sid,
+        name:req.session.name
+    });
+
+}
+
+exports.showChangePwd=function(req,res){
+    if(req.session.login != true){
+        res.redirect("/login");
+        return;
+    }
+    res.render("changePwd.ejs",{
+        sid:req.session.sid,
+        name:req.session.name,
+        showTip:!req.session.changedPassword
+    });
+}
+
+
+exports.doChangePwd=function(req,res){
+    console.log("doChangePwd-pwd:")
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        var password=fields.password;
+        console.log("doChangePwd-pwd:",password)
+        Student.find({"sid":req.session.sid},function(err,results){
+
+            var thestudent=results[0];
+
+            thestudent.changedPassword=true;
+            req.session.changedPassword = true;
+            thestudent.password=password;
+
+            thestudent.save();
+            res.json({"result":1});
+        })
     })
-
 }

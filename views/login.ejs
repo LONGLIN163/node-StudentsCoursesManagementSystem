@@ -43,10 +43,11 @@
                   <p>password</p>
                   <p>
                     <input type="password" class="form-control" id="passwordTxt">
+                    <span class="alert alert-danger" role="alert"></span>
                   </p>
 
                   <p>
-                    <input type="button" class="btn btn-success" id="loginbtn" id="passwordTxt" value="login">
+                    <input type="button" class="btn btn-success" id="loginbtn" value="login">
                   </p>
               </div>
           </div>
@@ -59,7 +60,7 @@
 
         $("#sidTxt").blur(function(){
             var sid=$(this).val();
-            console.log("login sid",sid)
+            //console.log("login sid",sid)
             if(!/^[\d]{9}$/.test(sid)){
                 $("#sidTxt").next().show().removeClass("alert-success").addClass("alert-danger").html("Could not pass regexp,Sid must be a nine-digit number!!!");
             }
