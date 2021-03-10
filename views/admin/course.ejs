@@ -71,7 +71,7 @@
                       {name : 'name',index : 'name', width : 30 , editable : true}, 
                       {name : 'dayofweek',index : 'dayofweek', width : 20 , editable : true, edittype:"select",
                       editoptions : {
-                              value : "2:周二; 3:周三; 5:周五"
+                              value : "2:Tuesday; 3:Wednesday; 5:Friday"
                             }
                       }, 
                       {name : 'allow',index : 'allow', width : 100 , editable : true}, 
@@ -111,7 +111,7 @@
       //css("background","red");
       $("#"+id+"_allow").hide();
       $("#"+id+"_allow").after(
-        "<label><input type='checkbox' value='初一'/>初一</label><label><input type='checkbox' value='初二'/>初二</label><label><input type='checkbox' value='初三'/>初三</label><label><input type='checkbox' value='高一'/>高一</label><label><input type='checkbox' value='高二'/>高二</label><label><input type='checkbox' value='高三'/>高三</label>");
+        "<label><input type='checkbox' value='junior 1'/>junior 1</label><label><input type='checkbox' value='junior 2'/>junior 2</label><label><input type='checkbox' value='junior 3'/>junior 3</label><label><input type='checkbox' value='senior 1'/>senior 1</label><label><input type='checkbox' value='senior 2'/>senior 2</label><label><input type='checkbox' value='senior 3'/>senior 3</label>");
 
         //get allowed grade field
         var dataArr=$("#"+id+"_allow").val().split(",");

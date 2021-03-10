@@ -296,7 +296,7 @@ exports.showAdminStudentExport = function(req,res){
 //Download all student excel
 exports.downloadStudentXlsx = function(req,res){
     var TableR = [];
-    var gradeArr = ["middle1","middle2","middle3","high1","high2","high3"];
+    var gradeArr = ["junior 1","junior 2","junior 3","senior 1","senior 2","senior 3"];
 
     function iterator(i){
         if(i == 6){
