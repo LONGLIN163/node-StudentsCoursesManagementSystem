@@ -32,7 +32,7 @@
               <li><a href="/changePwd">Change password</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="">Hello,<%= name %>(<%= sid %> ),you have logged in successfully </a></li>
+              <li class="active"><a href="">Hello,<%= name %>(<%= sid %>,<%= grade %> ),you have logged in successfully </a></li>
               <li ><a href="/logout">Logout </a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -41,7 +41,7 @@
 
       <div class="container">
         <div class="row">
-          <table class="table">
+          <table class="table" id="table">
             <tr>
               <th style="width: 120px;">cid</th>
               <th style="width: 120px;">name</th>
@@ -50,6 +50,7 @@
               <th style="width: 120px;">allow</th>
               <th style="width: 120px;">teacher</th>
               <th>briefintro</th>
+              <th>apply</th>
             </tr>
 
           </table> 
@@ -61,8 +62,35 @@
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script>
-      $.get("/course",function(data){
-        console.log(data)
+      $.get("/checkCourseApplicable",function(results){
+
+
+        $.get("/course",function(data){
+          console.log(data)
+          $.each(data.rows,function(index,item){
+                var $tr = $("<tr></tr>");
+                $tr.append("<td>" + item.cid +"</td>");
+                $tr.append("<td>" + item.name +"</td>");
+                $tr.append("<td>" + item.dayofweek +"</td>");
+                $tr.append("<td>" + item.allow +"</td>");
+                $tr.append("<td>" + item.number +"</td>");
+                $tr.append("<td>" + item.teacher +"</td>");
+                $tr.append("<td>" + item.briefintro +"</td>");
+                $tr.append("<td><input type='button' value='' class='btn applyBtn' id='applyBtn" + item.cid + "' data-cid='" + item.cid + "' /></td>");  
+                $("#table").append($tr);
+  
+                // change buttons status and style
+                $("#applyBtn" + item.cid).val(results[item.cid]);
+                if(results[item.cid] == "Course applicable"){
+                  $("#applyBtn" + item.cid).addClass("btn-success");
+                }else if(results[item.cid] == "Course Applied"){
+                  $("#applyBtn" + item.cid).attr("disabled",true).after("<p><a href='javascript:void(0);' class='tbbtn' data-role='cancel' data-cid=" + item.cid + ">Course Applied,Cancel?</a></p>")
+                }else{
+                  $("#applyBtn" + item.cid).attr("disabled",true);
+                }
+
+              });
+        })
       })
 
     </script>

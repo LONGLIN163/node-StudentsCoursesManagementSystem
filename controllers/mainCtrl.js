@@ -94,7 +94,8 @@ exports.showIndex=function(req,res){
     // present home page
     res.render("index.ejs",{
         sid:req.session.sid,
-        name:req.session.name
+        name:req.session.name,
+        grade:req.session.grade
     });
 
 }
@@ -136,8 +137,13 @@ exports.doChangePwd=function(req,res){
 }
 
 exports.checkCourseApplicable=function(req,res){
-    //update a student course in cmd: db.students.update({sid:'150104009'},{$set:{mycourses:['2','3']}})
-    var results=[];
+    if(req.session.login != true){
+        res.redirect("/login");
+        return;
+    }
+    //update a student course in cmd: db.students.update({sid:'150104001'},{$set:{mycourses:['2']}})
+    //var results=[];
+    var results={};
     Student.find({"sid":req.session.sid},function(err,students){
         var thestudent=students[0];
         // this student need to find all the days of week of his/her courses.
@@ -162,19 +168,26 @@ exports.checkCourseApplicable=function(req,res){
             console.log(myOccupiedDays)
              courses.forEach(function(item){
                 if(mycourses.indexOf(item.cid)!=-1){// if has already applied this course
-                    results.push({"cid":item.cid,"result":"You have applied this course"});
+                    //results.push({"cid":item.cid,"result":"You have applied this course"});
+                    results[item.cid]="Course Applied";
                 }else if(myOccupiedDays.indexOf(item.dayofweek)!=-1){// then check if this course has already been occupied
-                    results.push({"cid":item.cid,"result":"You have applied the other course at the same day"});
+                    //results.push({"cid":item.cid,"result":"You have applied the other course at the same day"});
+                    results[item.cid]="Day used";
                 }else if(item.number<=0){// then check if this course is full
-                    results.push({"cid":item.cid,"result":"The course is full"});
+                    //results.push({"cid":item.cid,"result":"The course is full"});
+                    results[item.cid]="Course full";
                 }else if(item.allow.indexOf(grade)==-1){// then check if this guy's grade is allowed or not
-                    results.push({"cid":item.cid,"result":"Your grade is not allow to apply this course"});
-                }else{// then check if this guy's grade is allowed or not
-                    results.push({"cid":item.cid,"result":1});
+                    //results.push({"cid":item.cid,"result":"Your grade is not allow to apply this course"});
+                    results[item.cid]="Grade mismatch";
+                }else if(myOccupiedDays.length==2){// then check if this guy's grade is allowed or not
+                    results[item.cid]="Reached limit";
+                } else{// then check if this guy's grade is allowed or not
+                    //results.push({"cid":item.cid,"result":1});
+                    results[item.cid]="Course applicable";
                 }
              })
 
-             res.json({"results":results});
+             res.json(results);
         
         })
     })
