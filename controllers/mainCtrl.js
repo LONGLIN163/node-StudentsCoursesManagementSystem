@@ -11,6 +11,38 @@ exports.showLogin=function(req,res){
     });
 }
 
+exports.showMyCourses=function(req,res){
+    console.log("session:"+req.session.login)
+    if(req.session.login != true){
+        res.redirect("/login");
+        return;
+    }
+    // present home page
+    res.render("myCourses.ejs",{
+        sid:req.session.sid,
+        name:req.session.name,
+        grade:req.session.grade
+    });
+}
+
+
+exports.checkMyCourses=function(req,res){
+    if(req.session.login != true){
+        res.redirect("/login");
+        return;
+    }
+    Student.find({"sid":req.session.sid},function(err,students){
+        var thestudent=students[0];
+        var mycourses=thestudent.mycourses;
+
+        Course.find({"cid": mycourses},function(err,courses){
+            //console.log("checkmycourse",courses);
+            res.json({"results":courses});
+        })
+    })
+}
+
+
 exports.doLogout=function(req,res){
     req.session.login = false;
     req.session.name = "";
@@ -109,6 +141,7 @@ exports.showChangePwd=function(req,res){
     res.render("changePwd.ejs",{
         sid:req.session.sid,
         name:req.session.name,
+        grade:req.session.grade,
         showTip:!req.session.changedPassword
     });
 }
@@ -150,7 +183,7 @@ exports.checkCourseApplicable=function(req,res){
         // this student need to find all the days of week of his/her courses.
         //console.log("his courses---",thestudent.mycourses)
         var mycourses=thestudent.mycourses;
-        console.log(mycourses);
+        console.log("mycourses",mycourses);
         //  map mcourse id to the day of week,then put the value to an arr
         var cidMapToDayOfWeek={};
         var myOccupiedDays=[];
@@ -165,8 +198,8 @@ exports.checkCourseApplicable=function(req,res){
                 }
                
             })
-            console.log(cidMapToDayOfWeek);//{ '2': 'tusday' ,.........}
-            console.log(myOccupiedDays)
+            console.log("cidMapToDayOfWeek",cidMapToDayOfWeek);//{ '2': 'tusday' ,.........}
+            console.log("myOccupiedDays",myOccupiedDays)
              courses.forEach(function(item){
                 if(mycourses.indexOf(item.cid)!=-1){// if has already applied this course
                     //results.push({"cid":item.cid,"result":"You have applied this course"});

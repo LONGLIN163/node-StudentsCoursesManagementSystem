@@ -28,69 +28,51 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li><a href="/">Apply course</a></li>
-              <li><a href="/myCourses">My courses</a></li>
-              <li class="active"><a href="#">Change password</a></li>
+              <li class="active"><a href="#">My courses</a></li>
+              <li><a href="/changePwd">Change password</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="">Hello,<%= name %>(<%= sid %>,<%= grade %>),you have logged in successfully </a></li>
+              <li class="active"><a href="">Hello,<%= name %>(<%= sid %>,<%= grade %> ),you have logged in successfully </a></li>
               <li ><a href="/logout">Logout </a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
+
       <div class="container">
         <div class="row">
-          <h3>Please hange your password</h3>
-          <hr>
-            <%if (showTip) { %>
+          <table class="table" id="table">
+            <tr>
+              <th style="width: 120px;">cid</th>
+              <th style="width: 120px;">name</th>
+              <th style="width: 120px;">dayofweek</th>
+              <th style="width: 120px;">teacher</th>
+              <th>briefintro</th>
+ 
+            </tr>
 
-              <div class="alert alert-danger">
-                  The system detect your are still using initial password, please create a new one, then you can use SCMS!
-              </div>
+          </table> 
 
-            <% } %>
-            <div class="col-lg-8">
-              <p>Set your password</p>
-              <p>
-                <input type="password" class="form-control" id="pwd1">
-  
-              </p>
-              <p>Repeat your password</p>
-              <p>
-                <input type="password" class="form-control" id="pwd2">
-    
-              </p>
-              <p>
-                <input type="button" class="btn btn-success" id="submitBtn" value="submit">
-              </p>
-          </div>
-          </div>
-    </div>
+        </div>
+
+      </div>
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script>
-      $("#submitBtn").click(function(){
-        if($("#pwd1").val()!==$("#pwd2").val()){
-          alert("The two passwords r different!")
-          return
-        }
-
-        //if they r the same, post data to api
-        $.post("/changePwd",{
-                password:$("#pwd1").val()
-            },function(data){
-              var result=data.result;
-              if(result==1){
-                    alert("Change password success, please login with new password!")
-                    window.location="/logout"
-                }else{
-                    alert("Change password failed, please contact with adminstrator!")
-                }
-               
-            })
+        $.get("/checkMyCourses",function(data){
+           console.log(data.results)
+           $.each(data.results,function(index,item){
+                console.log("item",item)
+                var $tr = $("<tr></tr>");
+                $tr.append("<td>" + item.cid +"</td>");
+                $tr.append("<td>" + item.name +"</td>");
+                $tr.append("<td>" + item.dayofweek +"</td>");
+                $tr.append("<td>" + item.teacher +"</td>");
+                $tr.append("<td>" + item.briefintro +"</td>");
+                $("#table").append($tr)
         })
-
+      })
     </script>
   </body>
 </html>

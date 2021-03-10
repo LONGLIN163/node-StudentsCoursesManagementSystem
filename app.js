@@ -57,7 +57,9 @@ app.get('/logout'                ,mainCtrl.doLogout);
 app.get('/'                      ,mainCtrl.showIndex);
 app.get('/checkCourseApplicable' ,mainCtrl.checkCourseApplicable); //get all students
 app.post('/applyCourse'          ,mainCtrl.applyCourse);
-app.post('/cancelCourse'          ,mainCtrl.cancelCourse);
+app.post('/cancelCourse'         ,mainCtrl.cancelCourse);
+app.get('/myCourses'             ,mainCtrl.showMyCourses);
+app.get('/checkMyCourses'        ,mainCtrl.checkMyCourses);
 
 
 
