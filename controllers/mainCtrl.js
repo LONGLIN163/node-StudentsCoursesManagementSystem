@@ -136,26 +136,46 @@ exports.doChangePwd=function(req,res){
 }
 
 exports.checkCourseApplicable=function(req,res){
-    //update a student course in cmd: db.students.update({sid:'150104009'},{$set:{mycourses:['2']}})
+    //update a student course in cmd: db.students.update({sid:'150104009'},{$set:{mycourses:['2','3']}})
     var results=[];
     Student.find({"sid":req.session.sid},function(err,students){
         var thestudent=students[0];
         // this student need to find all the days of week of his/her courses.
         //console.log("his courses---",thestudent.mycourses)
         var mycourses=thestudent.mycourses;
-        //  map mcourse id to the day of week
+        console.log(mycourses);
+        //  map mcourse id to the day of week,then put the value to an arr
         var cidMapToDayOfWeek={};
+        var myOccupiedDays=[];
+        var grade=thestudent.grade;
         // check all courses
         Course.find({},function(err,courses){
             courses.forEach(function(item){
                //console.log(item)
                 if(mycourses.indexOf(item.cid)!=-1){
                     cidMapToDayOfWeek[item.cid]=item.dayofweek;
+                    myOccupiedDays.push(item.dayofweek);
                 }
                
             })
             console.log(cidMapToDayOfWeek);//{ '2': 'tusday' ,.........}
-            
+            console.log(myOccupiedDays)
+             courses.forEach(function(item){
+                if(mycourses.indexOf(item.cid)!=-1){// if has already applied this course
+                    results.push({"cid":item.cid,"result":"You have applied this course"});
+                }else if(myOccupiedDays.indexOf(item.dayofweek)!=-1){// then check if this course has already been occupied
+                    results.push({"cid":item.cid,"result":"You have applied the other course at the same day"});
+                }else if(item.number<=0){// then check if this course is full
+                    results.push({"cid":item.cid,"result":"The course is full"});
+                }else if(item.allow.indexOf(grade)==-1){// then check if this guy's grade is allowed or not
+                    results.push({"cid":item.cid,"result":"Your grade is not allow to apply this course"});
+                }else{// then check if this guy's grade is allowed or not
+                    results.push({"cid":item.cid,"result":1});
+                }
+             })
+
+             res.json({"results":results});
+        
         })
     })
 
