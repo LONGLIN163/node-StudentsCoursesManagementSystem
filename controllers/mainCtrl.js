@@ -2,6 +2,7 @@ var formidable = require('formidable');
 var Student = require("../models/Student");
 var crypto = require("crypto");
 var Course = require("../models/Course");
+var _= require("underscore");
 
 
 exports.showLogin=function(req,res){
@@ -192,4 +193,53 @@ exports.checkCourseApplicable=function(req,res){
         })
     })
 
+} 
+
+
+exports.applyCourse=function(req,res){
+    var sid=req.session.sid;
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        var cid=fields.cid;
+        Student.find({"sid":sid},function(err,students){
+            var thestudent=students[0];
+            thestudent.mycourses.push(cid);
+            thestudent.save();
+            
+            Course.find({"cid":cid},function(err,courses){
+                var thecourse=courses[0];
+                thecourse.mystudents.push(sid);
+                thecourse.number--;
+                thecourse.save(function(){
+                    res.json({"result":1});
+                    
+                });
+            })
+        })
+    })
+} 
+
+
+exports.cancelCourse=function(req,res){
+    var sid=req.session.sid;
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        var cid=fields.cid;
+        Student.find({"sid":sid},function(err,students){
+            var thestudent=students[0];
+            thestudent.mycourses=_.without(thestudent.mycourses,cid);
+
+            thestudent.save();
+            
+            Course.find({"cid":cid},function(err,courses){
+                var thecourse=courses[0];
+                thecourse.mystudents=_.without(thecourse.mystudents,sid);
+                thecourse.number++;
+                thecourse.save(function(){
+                    res.json({"result":1});
+                    
+                });
+            })
+        })
+    })
 } 

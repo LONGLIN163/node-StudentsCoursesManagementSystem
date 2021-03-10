@@ -56,6 +56,11 @@ app.post('/login'                ,mainCtrl.doLogin);
 app.get('/logout'                ,mainCtrl.doLogout);
 app.get('/'                      ,mainCtrl.showIndex);
 app.get('/checkCourseApplicable' ,mainCtrl.checkCourseApplicable); //get all students
+app.post('/applyCourse'          ,mainCtrl.applyCourse);
+app.post('/cancelCourse'          ,mainCtrl.cancelCourse);
+
+
+
 
 app.get('/changePwd'             ,mainCtrl.showChangePwd);
 app.post('/changePwd'            ,mainCtrl.doChangePwd);

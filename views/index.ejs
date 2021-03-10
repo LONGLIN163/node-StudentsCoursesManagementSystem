@@ -27,7 +27,7 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">My Register</a></li>
+              <li class="active"><a href="#">Apply course</a></li>
               <li><a href="#">My course</a></li>
               <li><a href="/changePwd">Change password</a></li>
             </ul>
@@ -84,7 +84,7 @@
                 if(results[item.cid] == "Course applicable"){
                   $("#applyBtn" + item.cid).addClass("btn-success");
                 }else if(results[item.cid] == "Course Applied"){
-                  $("#applyBtn" + item.cid).attr("disabled",true).after("<p><a href='javascript:void(0);' class='tbbtn' data-role='cancel' data-cid=" + item.cid + ">Course Applied,Cancel?</a></p>")
+                  $("#applyBtn" + item.cid).attr("disabled",true).after("<p><a href='javascript:void(0);' class='cancelbtn' data-role='cancel' data-cid=" + item.cid + ">Cancel here</a></p>")
                 }else{
                   $("#applyBtn" + item.cid).attr("disabled",true);
                 }
@@ -92,6 +92,32 @@
               });
         })
       })
+
+      //when the element is created dynamically, we can use delegate 
+      // apply courses
+      $("#table").delegate(".applyBtn","click",function(){
+        //alert($(this).attr("data-cid"))
+        $.post("/applyCourse",{
+          "cid":$(this).attr("data-cid")
+        },function(data){
+          if(data.result==1){
+            alert("apply success")
+            window.location.reload();
+          }
+        })
+      });
+      //cancel courses
+      $("#table").delegate(".cancelbtn","click",function(){
+        //alert($(this).attr("data-cid"))
+        $.post("/cancelCourse",{
+          "cid":$(this).attr("data-cid")
+        },function(data){
+          if(data.result==1){
+            alert("cancel success")
+            window.location.reload();
+          }
+        })
+      });
 
     </script>
   </body>

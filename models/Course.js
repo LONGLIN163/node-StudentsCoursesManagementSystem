@@ -8,7 +8,8 @@ var courseSchema = new mongoose.Schema({
     "number" : Number,
     "allow" : [String],
     "teacher" : String,
-    "briefintro" : String
+    "briefintro" : String,
+    "mystudents":[String]
   });
 
 
