@@ -82,7 +82,12 @@ app.use(function(req,res){
 })*/
 
 
-app.listen(3000);
+//app.listen(3000);
+var app_port = process.env.YOUR_PORT || process.env.PORT || 3000;
+var app_host = process.env.YOUR_HOST || '0.0.0.0';
+server.listen(app_port, app_host, function() {
+    console.log('Listening on port %d', app_port);
+});
 console.log("The app is running on 3000!")
 
 // Initialize the app.
