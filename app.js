@@ -11,8 +11,8 @@ var mainCtrl=require("./controllers/mainCtrl");
 //Create express app obj
 var app = express();
 //Connect to database
-mongoose.connect('mongodb://localhost/scdb', {//********back up**********/
-//mongoose.connect('mongodb+srv://developerlin:Long2021...@cluster0.r4ghm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { 
+//mongoose.connect('mongodb://localhost/scdb', {//********back up**********/
+mongoose.connect('mongodb+srv://developerlin:Long2021...@cluster0.r4ghm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { 
 	useNewUrlParser: true,
 	useCreateIndex:true
 }).then(()=>{
@@ -83,8 +83,8 @@ app.use(function(req,res){
 })*/
 
 
-app.listen(3000);
-//app.listen(process.env.PORT, '0.0.0.0');
+//app.listen(3000);
+app.listen(process.env.PORT, '0.0.0.0');
 console.log("The app is running on server!")
 
 // Initialize the app.
