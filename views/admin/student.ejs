@@ -111,7 +111,7 @@
                       showTip("database error")
                     }
                   })
-              }
+              }    
         })
 
         function showTip(coutent){
@@ -180,6 +180,24 @@
             }
           })
         });
+
+        $.get("/student",function(data){
+           //console.log("123456",data)
+           $.each(data.rows,function(index,item){
+            //console.log("123456tiem",item)
+            //console.log("123456tiem",$('#' + item.sid).find("td").eq(4).html());
+            //$("#list").find("tr").eq(index).find("td").eq(4).html("hahahah")
+            if(item.changedPassword){   
+               $('#' + item.sid).find("td").eq(4).attr("disabled", "disabled").html("passwrod changed");
+               
+            }
+            $('#' + item.sid).find("td").eq(4).change(function(){
+              alert("You don't have authority to change this password, only this student can do it!")
+              window.location.reload();
+            })
+
+           })
+        })
     </script>
 
   </body>

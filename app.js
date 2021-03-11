@@ -11,8 +11,8 @@ var mainCtrl=require("./controllers/mainCtrl");
 //Create express app obj
 var app = express();
 //Connect to database
-//mongoose.connect('mongodb://localhost/scdb', {useNewUrlParser: true});//********back up**********/
-mongoose.connect('mongodb+srv://developerlin:Long2021...@cluster0.r4ghm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { 
+mongoose.connect('mongodb://localhost/scdb', {//********back up**********/
+//mongoose.connect('mongodb+srv://developerlin:Long2021...@cluster0.r4ghm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { 
 	useNewUrlParser: true,
 	useCreateIndex:true
 }).then(()=>{
@@ -45,6 +45,7 @@ app.delete('/student'            ,adminStudentCtrl.deleteStudent); //delete a st
 app.propfind('/student/:sid'     ,adminStudentCtrl.checkStudentExist)
 app.get('/student'               ,adminStudentCtrl.getAllStudents); //get all students
 app.post('/student/:sid'         ,adminStudentCtrl.updateStudent); //modify some student
+//app.get('/student'               ,adminStudentCtrl.checkWhoChangedPwd);
 
 app.get('/admin/course'          ,adminCourseCtrl.showAdminCourse);
 app.get('/admin/course/import'   ,adminCourseCtrl.showAdminCourseImport);
@@ -82,9 +83,9 @@ app.use(function(req,res){
 })*/
 
 
-//app.listen(3000);
-app.listen(process.env.PORT, '0.0.0.0');
-console.log("The app is running on 3000!")
+app.listen(3000);
+//app.listen(process.env.PORT, '0.0.0.0');
+console.log("The app is running on server!")
 
 // Initialize the app.
 // var server = app.listen(process.env.PORT || 3000, function () {
