@@ -11,8 +11,15 @@ var mainCtrl=require("./controllers/mainCtrl");
 //Create express app obj
 var app = express();
 //Connect to database
-mongoose.connect('mongodb://localhost/scdb', {useNewUrlParser: true});
-//mongoose.connect('mongodb://localhost/scdb', { useUnifiedTopology: true });
+//mongoose.connect('mongodb://localhost/scdb', {useNewUrlParser: true});//********back up**********/
+mongoose.connect('mongodb+srv://developerlin:Long2021...@cluster0.r4ghm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { 
+	useNewUrlParser: true,
+	useCreateIndex:true
+}).then(()=>{
+	console.log("Connect to db success");
+}).catch(err=>{
+	console.log("ERROR",err.message);
+});
 //Use session
 //Use session
 app.use(session({
@@ -77,3 +84,9 @@ app.use(function(req,res){
 
 app.listen(3000);
 console.log("The app is running on 3000!")
+
+// Initialize the app.
+// var server = app.listen(process.env.PORT || 3000, function () {
+// var port = server.address().port;
+// console.log("App now running on port", port);
+// });
