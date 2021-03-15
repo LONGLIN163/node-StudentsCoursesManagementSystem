@@ -1,10 +1,17 @@
-
-Students Courses Management System
+node-StudentsCoursesManagementSystem
 ===================================
 
-This project simulation a a series of senarios of a real course selection system based on teacher(user and manager) and student(user),include login and out, teacher can can import student excel data and edit student and course, student can registrate, apply and cancel for course at specific time .etc.
-the teach stacks covers node, mongoDB&mongoose, express, jquery, jqueryUI, bootstrap.
+The Project focus on the interaction between front-end and back-end, common user and and administator（CMS）with restful routing&api, robust front-end and back-end validation , login&logout(session), database persistence and all CRUD operations .etc. The techs cover mongodb&mongoose , express, ejs , uderscore.js, jquery&jqGrid, ajax, bootstrap .etc.
 
-### Connect to database 
+### Set up database
 
-Create an empty database, then connect it:hahahahah123
+Create an empty database,for example "scdb", then connect it:
+
+mongod --dbpath "C:\scdb"
+
+mongoose.connect('mongodb://localhost/scdb',...)
+
+### Run
+
+node app.js
+
