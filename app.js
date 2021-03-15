@@ -12,7 +12,7 @@ var mainCtrl=require("./controllers/mainCtrl");
 var app = express();
 //Connect to database
 //mongoose.connect('mongodb://localhost/scdb', {//********back up**********/
-mongoose.connect('mongodb+srv://developerlin:Long2021...@cluster0.r4ghm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { 
+mongoose.connect('mongodb+srv://developerlin:********@cluster0.r4ghm.mongodb.net/********?retryWrites=true&w=majority', { 
 	useNewUrlParser: true,
 	useCreateIndex:true
 }).then(()=>{
