@@ -30,9 +30,10 @@ Test admin client: http://127.0.0.1:3000/admin
 1. Click and go to http://127.0.0.1:3000/admin/student , then upload students excel data "testDataStudent" (in the project dir)
 2. Click and go to http://127.0.0.1:3000/admin/courses, then upload courses json data "CoursesJSON" (in the project dir)
 
-Test common user client: http://127.0.0.1:3000/
+Test common user client: http://127.0.0.1:3000/ 
+
 3. Download student info from students page.  
 4. Use initial students info(from download) to login, the change the password.
 
-Test from both side.
+Test from both side...
 
