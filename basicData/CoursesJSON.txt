@@ -1,0 +1,67 @@
+{
+	"courses" : [
+		{
+			"cid" : "1",
+			"name" : "JavaScript",
+			"dayofweek" : "Tuesday",
+			"number" : 20,
+			"allow" : ["junior 3","senior 3"],
+			"teacher" : "Brendan Eich",
+			"briefintro" : "JavaScript is the most popular programming language for building interactive websites; “virtually everyone is using it."
+		},
+		{
+			"cid" : "2",
+			"name" : "Java",
+			"dayofweek" : "Tuesday",
+			"number" : 20,
+			"allow" : ["junior 1","junior 2","junior 3","senior 1","senior 2","senior 3"],
+			"teacher" : "James Gosling",
+			"briefintro" : "Java is the programming language most commonly associated with the development of client-server applications, which are used by large businesses around the world. Java is designed to be a loosely coupled programming language, meaning that an application written in Java can run on any platform that supports Java.<br />Java is described as the “write once, run anywhere” programming language."
+		},
+		{
+			"cid" : "3",
+			"name" : "PHP",
+			"dayofweek" : "Tuesday",
+			"number" : 20,
+			"allow" :  ["junior 1","junior 2","junior 3","senior 1","senior 2","senior 3"],
+			"teacher" : "Rasmus Lerdorf",
+			"briefintro" : "PHP is widely used for server-side web development, when a website frequently requests information from a server."
+		},
+		{
+			"cid" : "4",
+			"name" : "Node.js",
+			"dayofweek" : "Tuesday",
+			"number" : 20,
+			"allow" :  ["junior 1","junior 2","junior 3","senior 1","senior 2","senior 3"],
+			"teacher" : "Ryan Dahl",
+			"briefintro" : "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine."
+		},
+		{
+			"cid" : "5",
+			"name" : "React",
+			"dayofweek" : "Wednesday",
+			"number" : 20,
+			"allow" :  ["junior 1","junior 2","senior 1","senior 2"],
+			"teacher" : "Jordan Walke",
+			"briefintro" : "A JavaScript library for building user interfaces."
+		},
+		{
+			"cid" : "6",
+			"name" : "Vue",
+			"dayofweek" : "Wednesday",
+			"number" : 20,
+			"allow" :  ["junior 3","senior 1","senior 2","senior 3"],
+			"teacher" : "Evan You",
+			"briefintro" : "Vue (pronounced /vjuː/, like view) is a progressive framework for building user interfaces. Unlike other monolithic frameworks, Vue is designed from the ground up to be incrementally adoptable."
+		},
+		{
+			"cid" : "7",
+			"name" : "Angular",
+			"dayofweek" : "Friday",
+			"number" : 20,
+			"allow" :  ["junior 1","junior 2","senior 2","senior 3"],
+			"teacher" : "Nolose",
+			"briefintro" : "Angular is an application design framework and development platform for creating efficient and sophisticated single-page apps.<br />Java is desgined for the big application."
+		} 
+	]
+}
